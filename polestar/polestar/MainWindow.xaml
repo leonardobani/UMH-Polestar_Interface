@@ -32,7 +32,6 @@
                 <EventTrigger RoutedEvent="MouseEnter">
                     <BeginStoryboard>
                         <Storyboard>
-                            <!-- Scurisce lo sfondo -->
                             <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
                                              Storyboard.TargetProperty="Opacity" 
                                              To="0.6" Duration="0:0:0.3" />
