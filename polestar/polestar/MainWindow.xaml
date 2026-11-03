@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:polestar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-<Grid Background="Black">
+        Title="MainWindow" Height="840" Width="840">
+<Grid Background="White">
     <Grid.RowDefinitions>
         <RowDefinition Height="*" />
         <RowDefinition Height="*" />
@@ -16,16 +16,81 @@
         <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
-    <Image Source="../images/2/nature.png" Grid.Row="0" Grid.Column="0" Margin="5" Stretch="UniformToFill"/>
-    <Image Source="placeholder_auto2.png" Grid.Row="0" Grid.Column="1" Margin="5" Stretch="UniformToFill"/>
-    <Image Source="https://www.polestar.com/dato-assets/94392/1787841325-03-1-polestar-4-s-27-overview-gallery-d.png" Grid.Row="1" Grid.Column="0" Margin="5" Stretch="UniformToFill"/>
-    <Image Source="placeholder_auto4.png" Grid.Row="1" Grid.Column="1" Margin="5" Stretch="UniformToFill"/>
+    <Border Grid.Row="0" Grid.Column="0" Background="Black" Margin="5">
+        <!-- La Grid intercetta gli eventi del mouse -->
+        <Grid Background="Transparent">
+            
+            <Image Source="../images/2nature.png"/>
 
-    <Image Source="polestar_logo.png" 
+            <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
+            
+            <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
+                <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
+                <Button Content="Configura ora" Width="160" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" />
+            </StackPanel>
+
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
+                                             Property="Opacity" To="0.6" Duration="0:0:0.3" />
+                            <!-- Fa comparire il testo e il bottone in 0.3 secondi -->
+                            <DoubleAnimation Storyboard.TargetName="ContenutoHover1" 
+                                             Property="Opacity" To="1" Duration="0:0:0.3" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!-- Riporta l'opacità a 0 per far tornare tutto come prima -->
+                            <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
+                                             Property="Opacity" To="0" Duration="0:0:0.3" />
+                            <DoubleAnimation Storyboard.TargetName="ContenutoHover1" 
+                                             Property="Opacity" To="0" Duration="0:0:0.3" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
+
+        </Grid>
+    </Border>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <Border Grid.Row="0" Grid.Column="1" Background="Black" Margin="5">
+        <Image Source="../images/3nature.png"/>
+    </Border>
+
+    <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="5">
+        <Image Source="../images/4nature.png"/>
+    </Border>
+
+    <Border Grid.Row="1" Grid.Column="1" Background="Black" Margin="5">
+        <Image Source="../images/5nature.png" />
+    </Border>
+
+
+    <Image Source="../images/logo.png" 
            Grid.RowSpan="2" 
            Grid.ColumnSpan="2" 
            HorizontalAlignment="Center" 
            VerticalAlignment="Center" 
-           Width="200" Height="200" />
+           Width="400" Height="400"
+           />
 </Grid>
 </Window>
