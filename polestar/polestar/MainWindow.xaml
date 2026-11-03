@@ -16,7 +16,7 @@
         <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
-    <Image Source="https://www.polestar.com/dato-assets/94392/1758187623-09-5-polestar-2-26-overview-gallery-d-edited.png" Grid.Row="0" Grid.Column="0" Margin="5" Stretch="UniformToFill"/>
+    <Image Source="../images/2/nature.png" Grid.Row="0" Grid.Column="0" Margin="5" Stretch="UniformToFill"/>
     <Image Source="placeholder_auto2.png" Grid.Row="0" Grid.Column="1" Margin="5" Stretch="UniformToFill"/>
     <Image Source="https://www.polestar.com/dato-assets/94392/1787841325-03-1-polestar-4-s-27-overview-gallery-d.png" Grid.Row="1" Grid.Column="0" Margin="5" Stretch="UniformToFill"/>
     <Image Source="placeholder_auto4.png" Grid.Row="1" Grid.Column="1" Margin="5" Stretch="UniformToFill"/>
