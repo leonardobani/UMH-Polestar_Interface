@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 <Grid Background="Black">
-    <!-- Definisci due righe e due colonne di uguali dimensioni -->
     <Grid.RowDefinitions>
         <RowDefinition Height="*" />
         <RowDefinition Height="*" />
@@ -17,15 +16,11 @@
         <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
-    <!-- Placeholder per le auto (i quadrati arancioni) -->
-    <!-- Quando avrai le foto, ti basterà cambiare il Source e impostare Stretch="UniformToFill" -->
     <Image Source="https://www.polestar.com/dato-assets/94392/1758187623-09-5-polestar-2-26-overview-gallery-d-edited.png" Grid.Row="0" Grid.Column="0" Margin="5" Stretch="UniformToFill"/>
     <Image Source="placeholder_auto2.png" Grid.Row="0" Grid.Column="1" Margin="5" Stretch="UniformToFill"/>
     <Image Source="https://www.polestar.com/dato-assets/94392/1787841325-03-1-polestar-4-s-27-overview-gallery-d.png" Grid.Row="1" Grid.Column="0" Margin="5" Stretch="UniformToFill"/>
     <Image Source="placeholder_auto4.png" Grid.Row="1" Grid.Column="1" Margin="5" Stretch="UniformToFill"/>
 
-    <!-- Logo Polestar Centrale -->
-    <!-- Span su 2 righe e 2 colonne lo centra rispetto all'intera griglia -->
     <Image Source="polestar_logo.png" 
            Grid.RowSpan="2" 
            Grid.ColumnSpan="2" 
