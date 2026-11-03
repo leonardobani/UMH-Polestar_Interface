@@ -17,39 +17,48 @@
     </Grid.ColumnDefinitions>
 
     <Border Grid.Row="0" Grid.Column="0" Background="Black" Margin="5">
-        <!-- La Grid intercetta gli eventi del mouse -->
         <Grid Background="Transparent">
             
             <Image Source="../images/2nature.png"/>
-
+                        
+            <!-- 2. Filtro scurente: invisibile di default (Opacity="0") -->
             <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
             
+            <!-- 3. Contenuto (Testo e CTA): invisibile di default (Opacity="0") -->
             <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
                 <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
                 <Button Content="Configura ora" Width="160" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" />
             </StackPanel>
 
+            <!-- 4. Animazioni (Triggers) -->
             <Grid.Triggers>
+                <!-- Quando il mouse ENTRA nel riquadro -->
                 <EventTrigger RoutedEvent="MouseEnter">
                     <BeginStoryboard>
                         <Storyboard>
+                            <!-- Scurisce lo sfondo -->
                             <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
-                                             Property="Opacity" To="0.6" Duration="0:0:0.3" />
-                            <!-- Fa comparire il testo e il bottone in 0.3 secondi -->
+                                             Storyboard.TargetProperty="Opacity" 
+                                             To="0.6" Duration="0:0:0.3" />
+                            <!-- Fa comparire il testo e il bottone -->
                             <DoubleAnimation Storyboard.TargetName="ContenutoHover1" 
-                                             Property="Opacity" To="1" Duration="0:0:0.3" />
+                                             Storyboard.TargetProperty="Opacity" 
+                                             To="1" Duration="0:0:0.3" />
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
                 
+                <!-- Quando il mouse ESCE dal riquadro -->
                 <EventTrigger RoutedEvent="MouseLeave">
                     <BeginStoryboard>
                         <Storyboard>
-                            <!-- Riporta l'opacità a 0 per far tornare tutto come prima -->
+                            <!-- Riporta l'opacità a 0 -->
                             <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
-                                             Property="Opacity" To="0" Duration="0:0:0.3" />
+                                             Storyboard.TargetProperty="Opacity" 
+                                             To="0" Duration="0:0:0.3" />
                             <DoubleAnimation Storyboard.TargetName="ContenutoHover1" 
-                                             Property="Opacity" To="0" Duration="0:0:0.3" />
+                                             Storyboard.TargetProperty="Opacity" 
+                                             To="0" Duration="0:0:0.3" />
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
