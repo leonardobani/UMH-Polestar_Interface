@@ -21,18 +21,14 @@
             
             <Image Source="../images/2nature.png"/>
                         
-            <!-- 2. Filtro scurente: invisibile di default (Opacity="0") -->
             <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
             
-            <!-- 3. Contenuto (Testo e CTA): invisibile di default (Opacity="0") -->
-            <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
+            <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
                 <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
-                <Button Content="Configura ora" Width="160" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" />
+                <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" />
             </StackPanel>
 
-            <!-- 4. Animazioni (Triggers) -->
             <Grid.Triggers>
-                <!-- Quando il mouse ENTRA nel riquadro -->
                 <EventTrigger RoutedEvent="MouseEnter">
                     <BeginStoryboard>
                         <Storyboard>
@@ -48,11 +44,9 @@
                     </BeginStoryboard>
                 </EventTrigger>
                 
-                <!-- Quando il mouse ESCE dal riquadro -->
                 <EventTrigger RoutedEvent="MouseLeave">
                     <BeginStoryboard>
                         <Storyboard>
-                            <!-- Riporta l'opacità a 0 -->
                             <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
                                              Storyboard.TargetProperty="Opacity" 
                                              To="0" Duration="0:0:0.3" />
