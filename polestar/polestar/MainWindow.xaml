@@ -19,7 +19,7 @@
     <Border Grid.Row="0" Grid.Column="0" Background="Black" Margin="5">
         <Grid Background="Transparent">
             
-            <Image Source="../images/2nature.png"/>
+            <Image Source="/images/2nature.png"/>
                         
             <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
             
@@ -75,19 +75,19 @@
 
 
     <Border Grid.Row="0" Grid.Column="1" Background="Black" Margin="5">
-        <Image Source="../images/3nature.png"/>
+        <Image Source="/images/3nature.png"/>
     </Border>
 
     <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="5">
-        <Image Source="../images/4nature.png"/>
+        <Image Source="/images/4nature.png"/>
     </Border>
 
     <Border Grid.Row="1" Grid.Column="1" Background="Black" Margin="5">
-        <Image Source="../images/5nature.png" />
+        <Image Source="/images/5nature.png" />
     </Border>
 
 
-    <Image Source="../images/logo.png" 
+    <Image Source="/images/logo.png" 
            Grid.RowSpan="2" 
            Grid.ColumnSpan="2" 
            HorizontalAlignment="Center" 
