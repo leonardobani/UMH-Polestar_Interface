@@ -1,98 +1,291 @@
-﻿<Window x:Class="polestar.MainWindow"
+<Window x:Class="polestar.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:polestar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="840" Width="840">
-<Grid Background="White">
-    <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
-        <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="*" />
-    </Grid.ColumnDefinitions>
+        Title="Polestar" Height="840" Width="840">
 
-    <Border Grid.Row="0" Grid.Column="0" Background="Black" Margin="5">
-        <Grid Background="Transparent">
-            
-            <Image Source="images/2nature.png"/>
-                        
-            <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
-            
-            <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
-                <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
-                <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" />
-            </StackPanel>
+    <ScrollViewer x:Name="MainScrollViewer" 
+                  VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Disabled"
+                  CanContentScroll="False">
+        <StackPanel Background="White">
 
-            <Grid.Triggers>
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
-                                             Storyboard.TargetProperty="Opacity" 
-                                             To="0.6" Duration="0:0:0.3" />
-                            <!-- Fa comparire il testo e il bottone -->
-                            <DoubleAnimation Storyboard.TargetName="ContenutoHover1" 
-                                             Storyboard.TargetProperty="Opacity" 
-                                             To="1" Duration="0:0:0.3" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
+            <!-- =================================================== -->
+            <!-- 1. SEZIONE HERO: GRIGLIA 2x2 MODELLI & LOGO CENTRALE-->
+            <!-- =================================================== -->
+            <Grid x:Name="SectionHero" Height="800" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Polestar 2 -->
+                <Border Grid.Row="0" Grid.Column="0" Background="Black" Margin="5">
+                    <Grid Background="Transparent">
+                        <Image Source="images/2nature.png"/>
+                        <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
+                        <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
+                            <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
+                            <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar2_Click" />
+                        </StackPanel>
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro1" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover1" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro1" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover1" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+                    </Grid>
+                </Border>
+
+                <!-- Polestar 3 -->
+                <Border Grid.Row="0" Grid.Column="1" Background="Black" Margin="5">
+                    <Grid Background="Transparent">
+                        <Image Source="images/3nature.png"/>
+                        <Rectangle x:Name="FiltroScuro2" Fill="Black" Opacity="0" />
+                        <StackPanel x:Name="ContenutoHover2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
+                            <TextBlock Text="Polestar 3" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
+                            <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar3_Click" />
+                        </StackPanel>
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro2" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover2" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro2" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover2" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+                    </Grid>
+                </Border>
+
+                <!-- Polestar 4 -->
+                <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="5">
+                    <Grid Background="Transparent">
+                        <Image Source="images/4nature.png"/>
+                        <Rectangle x:Name="FiltroScuro3" Fill="Black" Opacity="0" />
+                        <StackPanel x:Name="ContenutoHover3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
+                            <TextBlock Text="Polestar 4" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
+                            <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar4_Click" />
+                        </StackPanel>
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro3" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover3" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro3" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover3" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+                    </Grid>
+                </Border>
+
+                <!-- Polestar 5 -->
+                <Border Grid.Row="1" Grid.Column="1" Background="Black" Margin="5">
+                    <Grid Background="Transparent">
+                        <Image Source="images/5nature.png"/>
+                        <Rectangle x:Name="FiltroScuro4" Fill="Black" Opacity="0" />
+                        <StackPanel x:Name="ContenutoHover4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
+                            <TextBlock Text="Polestar 5" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
+                            <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar5_Click" />
+                        </StackPanel>
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro4" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover4" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FiltroScuro4" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="ContenutoHover4" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+                    </Grid>
+                </Border>
+
+                <!-- Logo Centrale -->
+                <Image Source="images/logo.png" 
+                       Grid.RowSpan="2" 
+                       Grid.ColumnSpan="2" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Width="400" Height="400"
+                       IsHitTestVisible="False" />
+            </Grid>
+
+            <!-- =================================================== -->
+            <!-- 2. SEZIONE SHOWCASE: 1 AUTO ALLA VOLTA CON CAROUSEL -->
+            <!--    Sfondo scuro, geometria logo ruotabile e fade    -->
+            <!-- =================================================== -->
+            <Grid x:Name="SectionShowcase" Height="800" Background="#232323" ClipToBounds="True">
                 
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="FiltroScuro1" 
-                                             Storyboard.TargetProperty="Opacity" 
-                                             To="0" Duration="0:0:0.3" />
-                            <DoubleAnimation Storyboard.TargetName="ContenutoHover1" 
-                                             Storyboard.TargetProperty="Opacity" 
-                                             To="0" Duration="0:0:0.3" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Grid.Triggers>
+                <!-- Geometria bianca del logo: ruota al cambio auto -->
+                <Path x:Name="LogoGeometryPath" 
+                      Fill="White" 
+                      Data="M 0,0 L 104,704 L 800,800 L 0,800 Z"
+                      RenderTransformOrigin="0.5,0.5">
+                    <Path.RenderTransform>
+                        <RotateTransform x:Name="LogoRotateTransform" Angle="0" />
+                    </Path.RenderTransform>
+                </Path>
 
-        </Grid>
-    </Border>
+                <!-- Contenuto testuale (anima in dissolvenza/fade) -->
+                <StackPanel x:Name="ShowcaseContentPanel" Margin="90,55,90,0" VerticalAlignment="Top">
+                    <TextBlock x:Name="ShowcaseHeading" 
+                               Text="Polestar 3" 
+                               Foreground="White" 
+                               FontSize="34" 
+                               FontWeight="SemiBold" 
+                               Margin="0,0,0,16" />
 
+                    <TextBlock x:Name="ShowcaseSubtitle" 
+                               Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                               Foreground="#E0E0E0" 
+                               FontSize="13.5" 
+                               TextWrapping="Wrap" 
+                               LineHeight="20" 
+                               Margin="0,0,0,18" />
 
+                    <TextBlock x:Name="ShowcaseDescription" 
+                               Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                               Foreground="#C5C5C5" 
+                               FontSize="13" 
+                               TextWrapping="Wrap" 
+                               LineHeight="20" 
+                               Margin="0,0,0,28" />
 
+                    <!-- Link orizzontali -->
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Left" 
+                                   Text="Link" 
+                                   Foreground="White" 
+                                   FontSize="14" 
+                                   TextDecorations="Underline" 
+                                   Cursor="Hand" />
 
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="Link" 
+                                       Foreground="White" 
+                                       FontSize="14" 
+                                       TextDecorations="Underline" 
+                                       Cursor="Hand" 
+                                       Margin="0,0,35,0" />
+                            <TextBlock Text="Link" 
+                                       Foreground="White" 
+                                       FontSize="14" 
+                                       TextDecorations="Underline" 
+                                       Cursor="Hand" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
 
+                <!-- Immagine dell'auto (vista laterale, anima in dissolvenza/fade) -->
+                <Image x:Name="ShowcaseCarImage" 
+                       Source="images/3side.png" 
+                       Width="620" 
+                       Stretch="Uniform" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Bottom" 
+                       Margin="0,0,0,105" />
 
+                <!-- Controlli di navigazione in basso a destra -->
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Bottom" 
+                            Margin="0,0,45,40">
+                    
+                    <!-- Contatore modello (es. 02 / 04) -->
+                    <TextBlock x:Name="CarIndexText" 
+                               Text="02 / 04" 
+                               Foreground="#888888" 
+                               FontSize="13" 
+                               FontWeight="SemiBold" 
+                               VerticalAlignment="Center" 
+                               Margin="0,0,20,0" />
 
+                    <!-- Pulsante freccia per passare alla prossima auto -->
+                    <Button x:Name="BtnNextCar" 
+                            Width="48" Height="48" 
+                            Background="Transparent" 
+                            BorderBrush="White" 
+                            BorderThickness="1.5" 
+                            Cursor="Hand"
+                            Click="BtnNextCar_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border" 
+                                        Background="{TemplateBinding Background}" 
+                                        BorderBrush="{TemplateBinding BorderBrush}" 
+                                        BorderThickness="{TemplateBinding BorderThickness}" 
+                                        CornerRadius="24">
+                                    <Path Data="M 0,0 L 7,7 L 0,14" 
+                                          Stroke="White" 
+                                          StrokeThickness="2" 
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center" 
+                                          Margin="2,0,0,0" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#33FFFFFF" />
+                                        <Setter TargetName="border" Property="BorderBrush" Value="#FFFFFF" />
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#55FFFFFF" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
 
+            </Grid>
 
-
-
-
-
-
-
-    <Border Grid.Row="0" Grid.Column="1" Background="Black" Margin="5">
-        <Image Source="images/3nature.png"/>
-    </Border>
-
-    <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="5">
-        <Image Source="images/4nature.png"/>
-    </Border>
-
-    <Border Grid.Row="1" Grid.Column="1" Background="Black" Margin="5">
-        <Image Source="images/5nature.png" />
-    </Border>
-
-
-    <Image Source="images/logo.png" 
-           Grid.RowSpan="2" 
-           Grid.ColumnSpan="2" 
-           HorizontalAlignment="Center" 
-           VerticalAlignment="Center" 
-           Width="400" Height="400"
-           />
-</Grid>
+        </StackPanel>
+    </ScrollViewer>
 </Window>
