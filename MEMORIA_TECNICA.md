@@ -93,24 +93,29 @@ polestar/
 ### 3.2. Diagrama de Navegación
 
 ```mermaid
-stateDiagram-v2
-    [*] --> LoginWindow: Inicio de la aplicación
-    
-    LoginWindow --> MainWindow: Validación correcta (Alumno / 1234)
-    LoginWindow --> MainWindow: Enlace directo "Inicio" / "Galería"
-    
-    state MainWindow {
-        [*] --> SectionHero: Sección Inicio (Ofertas y Novedades)
-        SectionHero --> SectionShowcase: Clic en "Configurar" o enlace de menú
-        SectionShowcase --> SectionBigText: Desplazamiento o botón cajón
-        SectionBigText --> SectionShowcase: Selección de silueta
-    }
+flowchart TD
+    Inicio([Inicio de la Aplicación]) --> Login[LoginWindow: Pantalla de Acceso]
 
-    MainWindow --> SearchView: Búsqueda rápida (Ctrl+F o icono lupa)
-    SearchView --> SectionShowcase: Resultado de modelo encontrado (2, 3, 4, 5)
-    SearchView --> MainWindow: Tecla Escape o botón cerrar
-    
-    MainWindow --> LoginWindow: Menú "Identificación" (Cerrar sesión)
+    Login -->|Credenciales Alumno / 1234| Hero
+    Login -->|Acceso directo Galería| Showcase
+
+    subgraph MW [MainWindow: Ventana Principal]
+        direction TB
+        Hero[Sección Inicio: Ofertas y Novedades]
+        Showcase[Sección Galería: Carrusel de Productos]
+        BigText[Sección Catálogo: Selector de Modelos]
+        Search[SearchView: Buscador Modal]
+
+        Hero -->|Clic en Configurar o menú| Showcase
+        Showcase -->|Desplazamiento / Botón cajón| BigText
+        BigText -->|Selección de silueta| Showcase
+
+        Showcase -.->|Lupa o Ctrl+F| Search
+        Search -.->|Modelo encontrado 2, 3, 4, 5| Showcase
+        Search -.->|Tecla Esc o botón cerrar| Showcase
+    end
+
+    MW -->|Menú Identificación / Logout| Login
 ```
 
 ---

@@ -2,7 +2,7 @@
 
 **Asignatura:** Práctica 1 - Desarrollo de Interfaces de Usuario  
 **Universidad:** Universidad Miguel Hernández de Elche (UMH)  
-**Herramientas utilizadas:** Asistente IA (ChatGPT / Claude / Gemini)  
+**Herramientas utilizadas:** Asistente IA (Gemini 3.8 Flash High)  
 **Ámbito de aplicación:** Soporte para resolución de dudas técnicas en WPF, refactorización de arquitectura a MVVM, depuración de eventos y diseño de animaciones.
 
 ---
@@ -20,7 +20,7 @@ Todo el código generado fue revisado críticamente, probado y adaptado manualme
 ## 2. Registro Cronológico de Interacciones
 
 ### Interacción 1: Selección e integración de librería de animaciones
-* **Fecha:** 08/11/2026
+* **Fecha:** 01/11/2026
 * **Objetivo:** Evitar la complejidad y verbosidad de los `Storyboard` nativos de WPF en C#.
 * **Prompt del alumno:**
   > *"Estoy desarrollando una interfaz en WPF para una práctica universitaria. Las animaciones nativas con Storyboard y DoubleAnimation en C# me quedan con demasiado código repetitivo. ¿Existe alguna librería ligera y moderna para WPF (como XamlFlair o similar) que permita aplicar efectos de fade y zoom fácilmente tanto en XAML como desde C#?"*
@@ -32,7 +32,7 @@ Todo el código generado fue revisado críticamente, probado y adaptado manualme
 ---
 
 ### Interacción 2: Depuración del ciclo de vida de ventanas (Bug de doble apertura)
-* **Fecha:** 09/11/2026
+* **Fecha:** 03/11/2026
 * **Objetivo:** Solucionar un fallo por el cual `MainWindow` se instanciaba dos veces tras el login.
 * **Prompt del alumno:**
   > *"Al pulsar el botón de login, tengo una animación de zoom en una imagen con ScaleX y ScaleY. Cuando termina la animación abro MainWindow con `new MainWindow().Show(); this.Close();`. Sin embargo, la ventana principal se me abre dos veces. ¿Por qué ocurre esto?"*
@@ -44,7 +44,7 @@ Todo el código generado fue revisado críticamente, probado y adaptado manualme
 ---
 
 ### Interacción 3: Refactorización a arquitectura MVVM
-* **Fecha:** 09/11/2026
+* **Fecha:** 05/11/2026
 * **Objetivo:** Separar los datos de los modelos de vehículos del code-behind de la ventana.
 * **Prompt del alumno:**
   > *"En mi MainWindow.xaml.cs tengo una lista fija de coches con nombre, descripción e imagen, y voy cambiando el texto de los TextBlock manualmente por código. ¿Cómo puedo estructurar esto de forma más profesional siguiendo el patrón MVVM usando CommunityToolkit.Mvvm sin complicarlo en exceso?"*

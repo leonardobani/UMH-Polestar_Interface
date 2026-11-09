@@ -48,9 +48,9 @@ La aplicación reproduce la experiencia digital y el lenguaje de diseño escandi
 
 ---
 
-## 👨‍💻 Datos del Alumno
+## 👨‍💻 Datos del Autor
 
-* **Alumno:** `[Nombre y Apellidos del Alumno]`
+* **Alumno:** Leonardo Bani
 * **Titulación:** Grado en Ingeniería Informática en Tecnologías de la Información
 * **Asignatura:** Interfaces de Usuario (Curso 2026/2027)
 * **Universidad:** Universidad Miguel Hernández de Elche (UMH)
