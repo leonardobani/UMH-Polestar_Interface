@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Width="840" Height="840"
+             HorizontalAlignment="Stretch" 
+             VerticalAlignment="Stretch"
              Background="#111114">
 
     <UserControl.Resources>
@@ -19,21 +20,23 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
-        <!-- Estrellas de fondo -->
-        <Canvas>
-            <TextBlock Style="{StaticResource StarStyle}" FontSize="24" Canvas.Left="85" Canvas.Top="85" Opacity="0.9" />
-            <TextBlock Style="{StaticResource StarStyle}" FontSize="18" Canvas.Left="245" Canvas.Top="210" Opacity="0.65" />
-            <TextBlock Style="{StaticResource StarStyle}" FontSize="20" Canvas.Left="515" Canvas.Top="90" Opacity="0.75" />
-            <TextBlock Style="{StaticResource StarStyle}" FontSize="26" Canvas.Left="655" Canvas.Top="130" Opacity="0.9" />
-            <TextBlock Style="{StaticResource StarStyle}" FontSize="16" Canvas.Left="685" Canvas.Top="245" Opacity="0.55" />
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <!-- Estrellas distribuidas en el cielo nocturno -->
+        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False">
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="24" Canvas.Left="100" Canvas.Top="80" Opacity="0.9" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="18" Canvas.Left="260" Canvas.Top="180" Opacity="0.65" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="20" Canvas.Left="420" Canvas.Top="90" Opacity="0.75" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="26" Canvas.Right="450" Canvas.Top="110" Opacity="0.85" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="18" Canvas.Right="240" Canvas.Top="190" Opacity="0.6" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="22" Canvas.Right="110" Canvas.Top="85" Opacity="0.9" />
         </Canvas>
 
+        <!-- Boton de cierre en la esquina superior derecha -->
         <Button x:Name="BtnCloseSearch" 
                 Width="44" Height="44" 
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top" 
-                Margin="0,20,25,0" 
+                Margin="0,22,28,0" 
                 Background="Transparent" 
                 BorderBrush="#55FFFFFF" 
                 BorderThickness="1" 
@@ -54,15 +57,16 @@
             </Button.Template>
         </Button>
 
+        <!-- Logotipo de Polestar en el cielo -->
         <Image Source="/images/logo.png" 
-               Width="110" Height="110" 
+               Width="100" Height="100" 
                HorizontalAlignment="Center" 
                VerticalAlignment="Top" 
-               Margin="0,95,0,0" />
+               Margin="0,75,0,0" />
 
-        <!-- Carretera -->
-        <Canvas HorizontalAlignment="Center" VerticalAlignment="Top" Width="840" Height="840">
-            <Rectangle Canvas.Left="0" Canvas.Top="600" Width="840" Height="240">
+        <!-- Carretera horizontal que cubre todo el ancho inferior -->
+        <Grid VerticalAlignment="Bottom" Height="220" HorizontalAlignment="Stretch">
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="#141418" Offset="0" />
@@ -71,102 +75,104 @@
                 </Rectangle.Fill>
             </Rectangle>
 
-            <Line X1="0" Y1="600" X2="840" Y2="600" 
-                  Stroke="#55FFFFFF" 
-                  StrokeThickness="2" />
+            <!-- Linea superior continua -->
+            <Border VerticalAlignment="Top" Height="2" Background="#55FFFFFF" />
 
-            <Line X1="0" Y1="715" X2="840" Y2="715" 
+            <!-- Linea central discontinua -->
+            <Line X1="0" Y1="0" X2="1" Y2="0" 
+                  Stretch="Fill" 
+                  VerticalAlignment="Center"
                   Stroke="#77FFFFFF" 
                   StrokeThickness="2.5" 
                   StrokeDashArray="20 16" />
 
-            <Line X1="0" Y1="820" X2="840" Y2="820" 
-                  Stroke="#33FFFFFF" 
-                  StrokeThickness="1" />
-        </Canvas>
+            <!-- Linea inferior / banchina -->
+            <Border VerticalAlignment="Bottom" Height="1" Background="#33FFFFFF" Margin="0,0,0,25" />
+        </Grid>
 
-        <!-- Postes -->
-        <Border Width="10" Height="220" 
-                Background="#1E1E24" 
-                BorderBrush="#55FFFFFF" 
-                BorderThickness="1" 
-                Margin="250,380,0,0" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top" />
+        <!-- Conjunto centrado del cartel de busqueda y postes de apoyo -->
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="530" Width="480">
+            <!-- Poste izquierdo -->
+            <Border Width="10" 
+                    Background="#1E1E24" 
+                    BorderBrush="#55FFFFFF" 
+                    BorderThickness="1" 
+                    HorizontalAlignment="Left" 
+                    Margin="60,96,0,0" />
 
-        <Border Width="10" Height="220" 
-                Background="#1E1E24" 
-                BorderBrush="#55FFFFFF" 
-                BorderThickness="1" 
-                Margin="0,380,250,0" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Top" />
+            <!-- Poste derecho -->
+            <Border Width="10" 
+                    Background="#1E1E24" 
+                    BorderBrush="#55FFFFFF" 
+                    BorderThickness="1" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,96,60,0" />
 
-        <!-- Cartel de busqueda -->
-        <Border Width="460" Height="96" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Top" 
-                Margin="0,310,0,0" 
-                CornerRadius="16" 
-                Background="#1A1A20" 
-                BorderBrush="White" 
-                BorderThickness="1.8">
-            <Grid Margin="22,0,16,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <!-- Cartel con barra de busqueda -->
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Border Width="460" Height="96" 
+                        CornerRadius="16" 
+                        Background="#1A1A20" 
+                        BorderBrush="White" 
+                        BorderThickness="1.8">
+                    <Grid Margin="22,0,16,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0" VerticalAlignment="Center">
-                    <TextBlock x:Name="SearchPlaceholder" 
-                               Text="Text" 
-                               Foreground="#66FFFFFF" 
-                               FontSize="22" 
-                               FontWeight="Light" 
-                               Margin="4,0,0,0" />
-                    <TextBox x:Name="SearchTextBox" 
-                             Background="Transparent" 
-                             Foreground="White" 
-                             BorderThickness="0" 
-                             FontSize="22" 
-                             VerticalAlignment="Center" 
-                             TextChanged="SearchTextBox_TextChanged" />
-                </Grid>
+                        <Grid Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock x:Name="SearchPlaceholder" 
+                                       Text="Text" 
+                                       Foreground="#66FFFFFF" 
+                                       FontSize="22" 
+                                       FontWeight="Light" 
+                                       Margin="4,0,0,0" />
+                            <TextBox x:Name="SearchTextBox" 
+                                     Background="Transparent" 
+                                     Foreground="White" 
+                                     BorderThickness="0" 
+                                     FontSize="22" 
+                                     VerticalContentAlignment="Center" 
+                                     TextChanged="SearchTextBox_TextChanged" />
+                        </Grid>
 
-                <Button x:Name="BtnExecuteSearch" 
-                        Grid.Column="1" 
-                        Width="68" Height="46" 
-                        Background="Transparent" 
-                        BorderThickness="0" 
-                        ToolTipService.ToolTip="Buscar"
-                        Click="BtnExecuteSearch_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="arrowBrd" Background="Transparent" CornerRadius="8">
-                                <Path Data="M 0,11 L 34,11 M 23,3 L 34,11 L 23,19" 
-                                      Stroke="White" 
-                                      StrokeThickness="2.6" 
-                                      StrokeStartLineCap="Round" 
-                                      StrokeEndLineCap="Round" 
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="arrowBrd" Property="Background" Value="#25FFFFFF" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </Grid>
-        </Border>
+                        <Button x:Name="BtnExecuteSearch" 
+                                Grid.Column="1" 
+                                Width="68" Height="46" 
+                                Background="Transparent" 
+                                BorderThickness="0" 
+                                ToolTipService.ToolTip="Buscar"
+                                Click="BtnExecuteSearch_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="arrowBrd" Background="Transparent" CornerRadius="8">
+                                        <Path Data="M 0,11 L 34,11 M 23,3 L 34,11 L 23,19" 
+                                              Stroke="White" 
+                                              StrokeThickness="2.6" 
+                                              StrokeStartLineCap="Round" 
+                                              StrokeEndLineCap="Round" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="arrowBrd" Property="Background" Value="#25FFFFFF" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </Border>
 
-        <TextBlock Text="Escribe un modelo (ej. Polestar 2, 3, 4, 5) y presiona Enter" 
-                   Foreground="#66FFFFFF" 
-                   FontSize="12" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Top" 
-                   Margin="0,425,0,0" />
+                <!-- Texto de ayuda debajo del cartel -->
+                <TextBlock Text="Escribe un modelo (ej. Polestar 2, 3, 4, 5) y presiona Enter" 
+                           Foreground="#66FFFFFF" 
+                           FontSize="12" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,14,0,0" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

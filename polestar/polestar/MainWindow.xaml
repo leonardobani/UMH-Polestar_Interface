@@ -97,11 +97,6 @@
                             VerticalAlignment="Center" 
                             Margin="0,0,20,0">
                     
-                    <TextBlock Text="Inicio" 
-                               Style="{StaticResource HeaderLinkStyle}" 
-                               Margin="0,0,20,0" 
-                               MouseLeftButtonUp="HeaderLink1_Click" />
-                    
                     <TextBlock Text="Galería" 
                                Style="{StaticResource HeaderLinkStyle}" 
                                Margin="0,0,20,0" 
@@ -531,6 +526,8 @@
                           Visibility="Collapsed" 
                           Opacity="0" 
                           Panel.ZIndex="1000"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
                           SearchSubmitted="SearchView_SearchSubmitted"
                           CloseRequested="SearchView_CloseRequested" />
     </Grid>
