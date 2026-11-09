@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
         mc:Ignorable="d"
         Title="Polestar - Identificación" 
         Height="630" Width="470" 
@@ -78,10 +77,11 @@
 
         <!-- Formulario de identificacion -->
         <Grid Grid.Row="1">
-            <StackPanel Width="320" 
+            <StackPanel x:Name="FormLoginPanel" 
+                        Width="320" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
-                        xf:Animations.Primary="{xf:Animate BasedOn={StaticResource FadeInAndSlideFromBottom}, Duration=550}">
+                        Opacity="0">
                 
                 <Image x:Name="LogoImage" 
                        Source="/images/logo.png" 

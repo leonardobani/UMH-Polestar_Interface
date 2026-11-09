@@ -13,6 +13,18 @@ namespace polestar
         public LoginWindow()
         {
             InitializeComponent();
+
+            Loaded += (s, e) =>
+            {
+                Animations.SetPrimary(FormLoginPanel, new AnimationSettings
+                {
+                    Kind = AnimationKind.FadeTo,
+                    Opacity = 1.0,
+                    Duration = 550,
+                    Easing = EasingType.Cubic,
+                    EasingMode = EasingMode.EaseOut
+                });
+            };
         }
 
         private void NavInicio_Click(object sender, MouseButtonEventArgs e)
