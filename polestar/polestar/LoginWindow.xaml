@@ -13,59 +13,46 @@
     <Grid>
         <StackPanel Width="320" HorizontalAlignment="Center" VerticalAlignment="Center">
             
-            <!-- Logo Polestar -->
-            <Image Source="/images/logo.png" 
+            <!-- Logo Polestar con Transform per l'effetto zoom -->
+            <Image x:Name="LogoImage" 
+                   Source="/images/logo.png" 
                    Width="65" Height="65" 
                    HorizontalAlignment="Center" 
-                   Margin="0,0,0,18" />
+                   RenderTransformOrigin="0.5,0.5"
+                   Margin="0,0,0,18">
+                <Image.RenderTransform>
+                    <ScaleTransform x:Name="LogoScale" ScaleX="1.0" ScaleY="1.0" />
+                </Image.RenderTransform>
+            </Image>
 
-            <!-- Titolo e Sottotitolo -->
-            <TextBlock Text="Polestar ID" 
-                       Foreground="White" 
-                       FontSize="24" 
-                       FontWeight="Light" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,0,0,6" />
+            <!-- Riquadro controlli form che sfuma durante la transizione -->
+            <StackPanel x:Name="FormControlsPanel">
+                <!-- Titolo e Sottotitolo -->
+                <TextBlock Text="Polestar ID" 
+                           Foreground="White" 
+                           FontSize="24" 
+                           FontWeight="Light" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,6" />
 
-            <TextBlock Text="Inserisci le tue credenziali" 
-                       Foreground="#888888" 
-                       FontSize="13" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,0,0,32" />
+                <TextBlock Text="Inserisci le tue credenziali" 
+                           Foreground="#888888" 
+                           FontSize="13" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,32" />
 
-            <!-- Campo Utente -->
-            <TextBlock Text="Usuario" 
-                       Foreground="#AAAAAA" 
-                       FontSize="12" 
-                       Margin="0,0,0,6" />
-            <Border Background="#1A1A20" 
-                    BorderBrush="#33FFFFFF" 
-                    BorderThickness="1" 
-                    CornerRadius="8" 
-                    Height="42" 
-                    Margin="0,0,0,18">
-                <TextBox x:Name="txtUsuario" 
-                         Background="Transparent" 
-                         Foreground="White" 
-                         CaretBrush="White"
-                         BorderThickness="0" 
-                         FontSize="14" 
-                         VerticalContentAlignment="Center" 
-                         Padding="12,0" />
-            </Border>
-
-            <!-- Campo Password -->
-            <TextBlock Text="Password" 
-                       Foreground="#AAAAAA" 
-                       FontSize="12" 
-                       Margin="0,0,0,6" />
-            <Border Background="#1A1A20" 
-                    BorderBrush="#33FFFFFF" 
-                    BorderThickness="1" 
-                    CornerRadius="8" 
-                    Height="42" 
-                    Margin="0,0,0,26">
-                <PasswordBox x:Name="txtPassword" 
+                <!-- Campo Utente -->
+                <TextBlock Text="Usuario" 
+                           Foreground="#AAAAAA" 
+                           FontSize="12" 
+                           Margin="0,0,0,6" />
+                <Border Background="#1A1A20" 
+                        BorderBrush="#33FFFFFF" 
+                        BorderThickness="1" 
+                        CornerRadius="8" 
+                        Height="42" 
+                        Margin="0,0,0,18">
+                    <TextBox x:Name="txtUsuario" 
                              Background="Transparent" 
                              Foreground="White" 
                              CaretBrush="White"
@@ -73,43 +60,65 @@
                              FontSize="14" 
                              VerticalContentAlignment="Center" 
                              Padding="12,0" />
-            </Border>
+                </Border>
 
-            <!-- Pulsante Login -->
-            <Button x:Name="btnLogin" 
-                    Content="Accedi" 
-                    Height="44" 
-                    Background="White" 
-                    Foreground="Black" 
-                    FontSize="14" 
-                    FontWeight="SemiBold" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    IsDefault="True" 
-                    Click="btnLogin_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="btnBrd" Background="{TemplateBinding Background}" CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="btnBrd" Property="Background" Value="#E0E0E0" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="btnBrd" Property="Background" Value="#CCCCCC" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                <!-- Campo Password -->
+                <TextBlock Text="Password" 
+                           Foreground="#AAAAAA" 
+                           FontSize="12" 
+                           Margin="0,0,0,6" />
+                <Border Background="#1A1A20" 
+                        BorderBrush="#33FFFFFF" 
+                        BorderThickness="1" 
+                        CornerRadius="8" 
+                        Height="42" 
+                        Margin="0,0,0,26">
+                    <PasswordBox x:Name="txtPassword" 
+                                 Background="Transparent" 
+                                 Foreground="White" 
+                                 CaretBrush="White"
+                                 BorderThickness="0" 
+                                 FontSize="14" 
+                                 VerticalContentAlignment="Center" 
+                                 Padding="12,0" />
+                </Border>
 
-            <!-- Nota credenziali di prova per la pratica -->
-            <TextBlock Text="Credenziali: Leo / 1234" 
-                       Foreground="#55FFFFFF" 
-                       FontSize="11" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,22,0,0" />
+                <!-- Pulsante Login -->
+                <Button x:Name="btnLogin" 
+                        Content="Accedi" 
+                        Height="44" 
+                        Background="White" 
+                        Foreground="Black" 
+                        FontSize="14" 
+                        FontWeight="SemiBold" 
+                        BorderThickness="0" 
+                        Cursor="Hand" 
+                        IsDefault="True" 
+                        Click="btnLogin_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="btnBrd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="btnBrd" Property="Background" Value="#E0E0E0" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="btnBrd" Property="Background" Value="#CCCCCC" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- Nota credenziali di prova per la pratica -->
+                <TextBlock Text="Credenziali: Alumno / 1234" 
+                           Foreground="#55FFFFFF" 
+                           FontSize="11" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,22,0,0" />
+            </StackPanel>
 
         </StackPanel>
     </Grid>
