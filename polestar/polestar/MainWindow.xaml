@@ -317,7 +317,7 @@
                           Width="520" Height="520"
                           HorizontalAlignment="Left" 
                           VerticalAlignment="Center" 
-                          Margin="-160,80,0,0"
+                          Margin="-150,200,0,0"
                           RenderTransformOrigin="0.5,0.5">
                         <Path.RenderTransform>
                             <RotateTransform x:Name="LogoRotateTransform" Angle="0" />
@@ -334,7 +334,7 @@
                                    Margin="0,0,0,16" />
 
                         <TextBlock x:Name="ShowcaseSubtitle" 
-                                   Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                                   Text="Il SUV per l'era elettrica. Design scandinavo puro, prestazioni da sportiva e tecnologia avanzata." 
                                    Foreground="#E0E0E0" 
                                    FontSize="13.5" 
                                    TextWrapping="Wrap" 
@@ -342,23 +342,48 @@
                                    Margin="0,0,0,18" />
 
                         <TextBlock x:Name="ShowcaseDescription" 
-                                   Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                                   Text="Linee aerodinamiche scolpite con alettone integrato nel cofano e spoiler posteriore. Trazione integrale a doppio motore con fino a 517 CV, sospensioni pneumatiche attive e sensori radar all'avanguardia. Autonomia fino a 610 km WLTP e interni realizzati con materiali sostenibili certificati." 
                                    Foreground="#C5C5C5" 
                                    FontSize="13" 
                                    TextWrapping="Wrap" 
                                    LineHeight="20" 
                                    Margin="0,0,0,28" />
 
-                        <!-- Link orizzontali -->
-                        <Grid>
-                            <TextBlock HorizontalAlignment="Left" 
-                                       Text="Link" 
-                                       Foreground="White" 
-                                       FontSize="14" 
-                                       TextDecorations="Underline" 
-                                       Cursor="Hand" />
+                        <!-- Link orizzontali e CTA -->
+                        <Grid Margin="0,6,0,0">
+                            <!-- Bottone decorato stile Sezione 1 per il link di sinistra -->
+                            <Button HorizontalAlignment="Left" 
+                                    Content="Configura ora" 
+                                    Width="135" Height="40" 
+                                    Background="Transparent" 
+                                    Foreground="White" 
+                                    BorderBrush="White" 
+                                    BorderThickness="1" 
+                                    FontSize="14" 
+                                    FontWeight="Medium" 
+                                    Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="btnBrd" 
+                                                Background="{TemplateBinding Background}" 
+                                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="btnBrd" Property="Background" Value="#25FFFFFF" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="btnBrd" Property="Background" Value="#45FFFFFF" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <!-- Link a destra allineati verticalmente al pulsante -->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                                 <TextBlock Text="Link" 
                                            Foreground="White" 
                                            FontSize="14" 

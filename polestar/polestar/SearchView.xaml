@@ -64,37 +64,37 @@
                Margin="0,95,0,0" />
 
 
-        <!-- 3. Strada in prospettiva (autostrada notturna Polestar) -->
+        <!-- 3. Strada orizzontale notturna in basso -->
         <Canvas HorizontalAlignment="Center" VerticalAlignment="Top" Width="840" Height="840">
-            <!-- Superficie stradale asfaltata -->
-            <Polygon Points="260,460 580,460 840,840 0,840">
-                <Polygon.Fill>
+            <!-- Superficie stradale asfaltata orizzontale -->
+            <Rectangle Canvas.Left="0" Canvas.Top="600" Width="840" Height="240">
+                <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="#131317" Offset="0" />
-                        <GradientStop Color="#181822" Offset="1" />
+                        <GradientStop Color="#141418" Offset="0" />
+                        <GradientStop Color="#1A1A22" Offset="1" />
                     </LinearGradientBrush>
-                </Polygon.Fill>
-            </Polygon>
+                </Rectangle.Fill>
+            </Rectangle>
 
-            <!-- Corsia / Bordo sinistro (striscia continua) -->
-            <Line X1="260" Y1="460" X2="30" Y2="840" 
+            <!-- Bordo superiore della strada (striscia continua di banchina) -->
+            <Line X1="0" Y1="600" X2="840" Y2="600" 
                   Stroke="#55FFFFFF" 
                   StrokeThickness="2" />
 
-            <!-- Corsia / Bordo destro (striscia continua) -->
-            <Line X1="580" Y1="460" X2="810" Y2="840" 
-                  Stroke="#55FFFFFF" 
-                  StrokeThickness="2" />
-
-            <!-- Linea di mezzeria tratteggiata centrale -->
-            <Line X1="420" Y1="460" X2="420" Y2="840" 
+            <!-- Linea spartitraffico centrale tratteggiata orizzontale -->
+            <Line X1="0" Y1="715" X2="840" Y2="715" 
                   Stroke="#77FFFFFF" 
                   StrokeThickness="2.5" 
-                  StrokeDashArray="14 12" />
+                  StrokeDashArray="20 16" />
+
+            <!-- Bordo inferiore / banchina -->
+            <Line X1="0" Y1="820" X2="840" Y2="820" 
+                  Stroke="#33FFFFFF" 
+                  StrokeThickness="1" />
         </Canvas>
 
-        <!-- 4. Pali del cartello stradale -->
-        <Border Width="10" Height="80" 
+        <!-- 4. Pali di supporto del cartello stradale -->
+        <Border Width="10" Height="220" 
                 Background="#1E1E24" 
                 BorderBrush="#55FFFFFF" 
                 BorderThickness="1" 
@@ -102,7 +102,7 @@
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" />
 
-        <Border Width="10" Height="80" 
+        <Border Width="10" Height="220" 
                 Background="#1E1E24" 
                 BorderBrush="#55FFFFFF" 
                 BorderThickness="1" 

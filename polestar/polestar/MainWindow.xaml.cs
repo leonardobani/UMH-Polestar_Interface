@@ -27,28 +27,28 @@ namespace polestar
             {
                 Name = "Polestar 2",
                 Subtitle = "100% elettrica. Fastback ad alte prestazioni con dinamica di guida coinvolgente.",
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Design scandinavo puro, materiali innovativi riciclati e accelerazione istantanea.",
+                Description = "Design scandinavo puro, silhouette fastback decisa e fari a LED Pixel. Fino a 476 CV nella versione Dual Motor con Performance Pack, ammortizzatori regolabili Öhlins e freni Brembo. Sistema di infotainment con Google integrato e autonomia fino a 654 km WLTP.",
                 ImageSource = "/images/2side.png"
             },
             new CarInfo
             {
                 Name = "Polestar 3",
-                Subtitle = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                Subtitle = "Il SUV per l'era elettrica. Design scandinavo puro, prestazioni da sportiva e tecnologia avanzata.",
+                Description = "Linee aerodinamiche scolpite con alettone integrato nel cofano e spoiler posteriore. Trazione integrale a doppio motore con fino a 517 CV, sospensioni pneumatiche attive e sensori radar all'avanguardia. Autonomia fino a 610 km WLTP e interni realizzati con materiali sostenibili certificati.",
                 ImageSource = "/images/3side.png"
             },
             new CarInfo
             {
                 Name = "Polestar 4",
                 Subtitle = "Il SUV coupé elettrico trasformato. Comfort e aerodinamica senza lunotto posteriore.",
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lo spazio interno di una berlina di lusso si unisce alla linea affilata di un coupé sportivo.",
+                Description = "Innovazione radicale che ridefinisce l'aerodinamica eliminando il lunotto posteriore a favore di uno specchietto digitale HD. Da 0 a 100 km/h in 3,8 secondi, tetto panoramico in vetro elettrocromico e uno spazio posteriore da berlina di lusso con sedili reclinabili.",
                 ImageSource = "/images/4side.png"
             },
             new CarInfo
             {
                 Name = "Polestar 5",
                 Subtitle = "La GT elettrica a 4 porte ad altissime prestazioni. L'evoluzione di Polestar Precept.",
-                Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Architettura a 800V, fino a 884 CV e telaio in alluminio incollato sviluppato per il motorsport.",
+                Description = "Ispirata alla concept car Precept, unisce l'eleganza di una gran turismo a 4 porte a prestazioni estreme da supercar. Architettura a 800V, doppio motore sincrono da 884 CV e 900 Nm di coppia con telaio in alluminio incollato derivato dal motorsport.",
                 ImageSource = "/images/5side.png"
             }
         };
