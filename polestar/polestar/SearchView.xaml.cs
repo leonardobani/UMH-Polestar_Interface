@@ -6,9 +6,6 @@ using System.Windows.Media;
 
 namespace polestar
 {
-    /// <summary>
-    /// Logica di interazione per SearchView.xaml
-    /// </summary>
     public partial class SearchView : UserControl
     {
         public event EventHandler<string>? SearchSubmitted;
@@ -18,7 +15,6 @@ namespace polestar
         {
             InitializeComponent();
 
-            // Configurazione proprietà native WPF da codice per compatibilità con i previewer XAML
             BtnCloseSearch.Cursor = Cursors.Hand;
             BtnExecuteSearch.Cursor = Cursors.Hand;
             SearchPlaceholder.IsHitTestVisible = false;

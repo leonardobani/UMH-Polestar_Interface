@@ -1,13 +1,11 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+using System.Windows.Input;
+using XamlFlair;
 
 namespace polestar
 {
-    /// <summary>
-    /// Logica di interazione per LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         private bool _isLoggingIn = false;
@@ -15,6 +13,20 @@ namespace polestar
         public LoginWindow()
         {
             InitializeComponent();
+        }
+
+        private void NavInicio_Click(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow main = new MainWindow("SectionHero");
+            main.Show();
+            this.Close();
+        }
+
+        private void NavGaleria_Click(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow main = new MainWindow("SectionShowcase");
+            main.Show();
+            this.Close();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -40,60 +52,41 @@ namespace polestar
                 }
                 else
                 {
-                    MessageBox.Show("Usuario correcto");
-                    AvviaTransizioneZoom();
-                    return;
+                    AnimarYEntrar();
                 }
             }
         }
 
-        /// <summary>
-        /// Esegue l'effetto di zoom sul logo Polestar e apre la finestra principale
-        /// </summary>
-        private void AvviaTransizioneZoom()
+        private async void AnimarYEntrar()
         {
             _isLoggingIn = true;
             btnLogin.IsEnabled = false;
 
-            // 1. Dissolvenza rapida degli input del form
-            DoubleAnimation fadeForm = new DoubleAnimation
+            // Animacion de salida y zoom del logo
+            Animations.SetPrimary(FormControlsPanel, new AnimationSettings
             {
-                From = 1.0,
-                To = 0.0,
-                Duration = TimeSpan.FromSeconds(0.25)
-            };
+                Kind = AnimationKind.FadeTo,
+                Opacity = 0.0,
+                Duration = 250
+            });
 
-            // 2. Animazione Zoom (ingrandimento progressivo) del logo Polestar
-            DoubleAnimation zoomAnim = new DoubleAnimation
+            Animations.SetPrimary(LogoImage, new AnimationSettings
             {
-                From = 1.0,
-                To = 5.0,
-                Duration = TimeSpan.FromSeconds(0.6),
-                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn }
-            };
+                Kind = AnimationKind.FadeTo | AnimationKind.ScaleXTo | AnimationKind.ScaleYTo,
+                ScaleX = 5.0,
+                ScaleY = 5.0,
+                Opacity = 0.0,
+                Duration = 600,
+                Easing = EasingType.Cubic,
+                EasingMode = EasingMode.EaseIn
+            });
 
-            // 3. Dissolvenza morbida del logo verso la fine dell'ingrandimento
-            DoubleAnimation fadeLogo = new DoubleAnimation
-            {
-                From = 1.0,
-                To = 0.0,
-                Duration = TimeSpan.FromSeconds(0.3),
-                BeginTime = TimeSpan.FromSeconds(0.3)
-            };
+            await Task.Delay(600);
 
-            // 4. Apertura della pagina principale al termine dello zoom
-            zoomAnim.Completed += (s, e) =>
-            {
-                MainWindow main = new MainWindow();
-                main.Show();
-                this.Close();
-            };
-
-            // Avvio sincronizzato delle animazioni
-            FormControlsPanel.BeginAnimation(UIElement.OpacityProperty, fadeForm);
-            LogoImage.BeginAnimation(UIElement.OpacityProperty, fadeLogo);
-            LogoScale.BeginAnimation(ScaleTransform.ScaleXProperty, zoomAnim);
-            LogoScale.BeginAnimation(ScaleTransform.ScaleYProperty, zoomAnim);
+            // Abrir ventana principal y cerrar login
+            MainWindow ventanaPrincipal = new MainWindow();
+            ventanaPrincipal.Show();
+            this.Close();
         }
     }
 }

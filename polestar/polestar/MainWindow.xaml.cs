@@ -1,258 +1,202 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
+using polestar.ViewModels;
+using XamlFlair;
 
 namespace polestar
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private class CarInfo
-        {
-            public string Name { get; set; } = "";
-            public string Subtitle { get; set; } = "";
-            public string Description { get; set; } = "";
-            public string ImageSource { get; set; } = "";
-        }
+        public MainViewModel ViewModel { get; }
 
-        private readonly CarInfo[] _cars = new[]
-        {
-            new CarInfo
-            {
-                Name = "Polestar 2",
-                Subtitle = "100% elettrica. Fastback ad alte prestazioni con dinamica di guida coinvolgente.",
-                Description = "Design scandinavo puro, silhouette fastback decisa e fari a LED Pixel. Fino a 476 CV nella versione Dual Motor con Performance Pack, ammortizzatori regolabili Öhlins e freni Brembo. Sistema di infotainment con Google integrato e autonomia fino a 654 km WLTP.",
-                ImageSource = "/images/2side.png"
-            },
-            new CarInfo
-            {
-                Name = "Polestar 3",
-                Subtitle = "Il SUV per l'era elettrica. Design scandinavo puro, prestazioni da sportiva e tecnologia avanzata.",
-                Description = "Linee aerodinamiche scolpite con alettone integrato nel cofano e spoiler posteriore. Trazione integrale a doppio motore con fino a 517 CV, sospensioni pneumatiche attive e sensori radar all'avanguardia. Autonomia fino a 610 km WLTP e interni realizzati con materiali sostenibili certificati.",
-                ImageSource = "/images/3side.png"
-            },
-            new CarInfo
-            {
-                Name = "Polestar 4",
-                Subtitle = "Il SUV coupé elettrico trasformato. Comfort e aerodinamica senza lunotto posteriore.",
-                Description = "Innovazione radicale che ridefinisce l'aerodinamica eliminando il lunotto posteriore a favore di uno specchietto digitale HD. Da 0 a 100 km/h in 3,8 secondi, tetto panoramico in vetro elettrocromico e uno spazio posteriore da berlina di lusso con sedili reclinabili.",
-                ImageSource = "/images/4side.png"
-            },
-            new CarInfo
-            {
-                Name = "Polestar 5",
-                Subtitle = "La GT elettrica a 4 porte ad altissime prestazioni. L'evoluzione di Polestar Precept.",
-                Description = "Ispirata alla concept car Precept, unisce l'eleganza di una gran turismo a 4 porte a prestazioni estreme da supercar. Architettura a 800V, doppio motore sincrono da 884 CV e 900 Nm di coppia con telaio in alluminio incollato derivato dal motorsport.",
-                ImageSource = "/images/5side.png"
-            }
-        };
-
-        // Angolo di rotazione per ciascun cambio auto (180 o 90 gradi)
         private const double RotationStep = 180.0;
-
-        private int _currentCarIndex = 1; // Inizia con Polestar 3 come nel mockup
         private double _currentAngle = 0.0;
         private bool _isAnimating = false;
 
         private Image[] _menuCarImages = null!;
 
-        public MainWindow()
+        public MainWindow(string initialSection = "")
         {
             InitializeComponent();
+
+            ViewModel = new MainViewModel();
+            DataContext = ViewModel;
+
             _menuCarImages = new[] { MenuCar0, MenuCar1, MenuCar2, MenuCar3 };
+
+            // Eventos del ViewModel para animaciones y scroll
+            ViewModel.CarTransitionRequested += OnCarTransitionRequested;
+            ViewModel.SearchOpenRequested += OpenSearchOverlay;
+            ViewModel.SearchCloseRequested += CloseSearchOverlay;
+            ViewModel.ScrollRequested += OnScrollRequested;
+
+            if (!string.IsNullOrEmpty(initialSection))
+            {
+                Loaded += (s, e) => OnScrollRequested(initialSection);
+            }
         }
 
-        // ==========================================
-        // HEADER STICKY INTERACTIONS
-        // ==========================================
+        // Navegacion del header
+        private void BtnDrawer_Click(object sender, RoutedEventArgs e) => SectionBigText?.BringIntoView();
+        private void LogoHeader_Click(object sender, MouseButtonEventArgs e) => SectionHero?.BringIntoView();
+        private void HeaderLink1_Click(object sender, MouseButtonEventArgs e) => SectionHero?.BringIntoView();
+        private void HeaderLink2_Click(object sender, MouseButtonEventArgs e) => SectionShowcase?.BringIntoView();
+        private void HeaderLink3_Click(object sender, MouseButtonEventArgs e) => SectionBigText?.BringIntoView();
 
-        private void BtnDrawer_Click(object sender, RoutedEventArgs e)
+        private void HeaderLogin_Click(object sender, MouseButtonEventArgs e)
         {
-            SectionBigText?.BringIntoView();
-        }
-
-        private void LogoHeader_Click(object sender, MouseButtonEventArgs e)
-        {
-            SectionHero?.BringIntoView();
-        }
-
-        private void HeaderLink1_Click(object sender, MouseButtonEventArgs e)
-        {
-            SectionHero?.BringIntoView();
-        }
-
-        private void HeaderLink2_Click(object sender, MouseButtonEventArgs e)
-        {
-            SectionShowcase?.BringIntoView();
-        }
-
-        private void HeaderLink3_Click(object sender, MouseButtonEventArgs e)
-        {
-            SectionBigText?.BringIntoView();
+            LoginWindow login = new LoginWindow();
+            login.Show();
+            this.Close();
         }
 
         private void HeaderSearch_Click(object sender, MouseButtonEventArgs e)
         {
-            OpenSearchOverlay();
+            ViewModel.OpenSearchCommand.Execute(null);
         }
 
-        // ==========================================
-        // SEARCH VIEW (GESTIONE OVERLAY)
-        // ==========================================
-
+        // Overlay de busqueda
         private void OpenSearchOverlay()
         {
             SearchOverlay.Visibility = Visibility.Visible;
-            DoubleAnimation fadeIn = new DoubleAnimation(0.0, 1.0, TimeSpan.FromSeconds(0.28));
-            fadeIn.Completed += (s, ev) =>
+            Animations.SetPrimary(SearchOverlay, new AnimationSettings
             {
-                SearchOverlay.FocusInput();
-            };
-            SearchOverlay.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+                Kind = AnimationKind.FadeTo,
+                Opacity = 1.0,
+                Duration = 280
+            });
+            SearchOverlay.FocusInput();
         }
 
-        private void CloseSearchOverlay()
+        private async void CloseSearchOverlay()
         {
-            DoubleAnimation fadeOut = new DoubleAnimation(1.0, 0.0, TimeSpan.FromSeconds(0.2));
-            fadeOut.Completed += (s, ev) =>
+            Animations.SetPrimary(SearchOverlay, new AnimationSettings
             {
-                SearchOverlay.Visibility = Visibility.Collapsed;
-            };
-            SearchOverlay.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+                Kind = AnimationKind.FadeTo,
+                Opacity = 0.0,
+                Duration = 200
+            });
+            await Task.Delay(200);
+            SearchOverlay.Visibility = Visibility.Collapsed;
         }
 
         private void SearchView_CloseRequested(object? sender, EventArgs e)
         {
-            CloseSearchOverlay();
+            ViewModel.CloseSearchCommand.Execute(null);
         }
 
         private void SearchView_SearchSubmitted(object? sender, string query)
         {
-            ExecuteSearch(query);
+            ViewModel.ExecuteSearchCommand.Execute(query);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape && SearchOverlay.Visibility == Visibility.Visible)
             {
-                CloseSearchOverlay();
+                ViewModel.CloseSearchCommand.Execute(null);
                 e.Handled = true;
             }
         }
 
-        private void ExecuteSearch(string query)
-        {
-            string q = query.ToLowerInvariant();
-
-            int targetIndex = -1;
-            if (q.Contains("2")) targetIndex = 0;
-            else if (q.Contains("3")) targetIndex = 1;
-            else if (q.Contains("4")) targetIndex = 2;
-            else if (q.Contains("5")) targetIndex = 3;
-
-            CloseSearchOverlay();
-
-            if (targetIndex >= 0)
-            {
-                SwitchToCarAndScroll(targetIndex);
-            }
-            else
-            {
-                SectionBigText?.BringIntoView();
-            }
-        }
-
-        // ==========================================
-        // SEZIONE SHOWCASE: ROTAZIONE E DISSOLVENZA
-        // ==========================================
-
+        // Showcase: transicion al cambiar de coche
         private void BtnNextCar_Click(object sender, RoutedEventArgs e)
         {
             if (_isAnimating) return;
-            int nextIndex = (_currentCarIndex + 1) % _cars.Length;
-            TransitionToCar(nextIndex);
+            ViewModel.NextCarCommand.Execute(null);
         }
 
-        private void TransitionToCar(int targetIndex)
+        private async void OnCarTransitionRequested(int targetIndex)
         {
             _isAnimating = true;
 
-            // 1. Animazione di rotazione della geometria del logo
+            // Rotar logo
             double targetAngle = _currentAngle + RotationStep;
-            DoubleAnimation rotateAnim = new DoubleAnimation
+            Animations.SetPrimary(LogoGeometryPath, new AnimationSettings
             {
-                From = _currentAngle,
-                To = targetAngle,
-                Duration = TimeSpan.FromSeconds(0.6),
-                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseInOut }
-            };
-            LogoRotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnim);
+                Kind = AnimationKind.RotateTo,
+                Rotation = targetAngle,
+                Duration = 600,
+                Easing = EasingType.Cubic,
+                EasingMode = EasingMode.EaseInOut
+            });
             _currentAngle = targetAngle;
 
-            // 2. Dissolvenza in uscita (Fade Out) per auto e testo
-            DoubleAnimation fadeOut = new DoubleAnimation
+            // Fade out
+            var fadeOut = new AnimationSettings
             {
-                From = 1.0,
-                To = 0.0,
-                Duration = TimeSpan.FromSeconds(0.25)
+                Kind = AnimationKind.FadeTo,
+                Opacity = 0.0,
+                Duration = 250
             };
+            Animations.SetPrimary(ShowcaseContentPanel, fadeOut);
+            Animations.SetPrimary(ShowcaseCarImage, fadeOut);
 
-            fadeOut.Completed += (s, ev) =>
+            await Task.Delay(250);
+
+            // Fade in (los datos se actualizan por binding)
+            var fadeIn = new AnimationSettings
             {
-                _currentCarIndex = targetIndex;
-                var car = _cars[_currentCarIndex];
-
-                ShowcaseHeading.Text = car.Name;
-                ShowcaseSubtitle.Text = car.Subtitle;
-                ShowcaseDescription.Text = car.Description;
-                ShowcaseCarImage.Source = new BitmapImage(new Uri(car.ImageSource, UriKind.Relative));
-                CarIndexText.Text = $"0{_currentCarIndex + 1} / 0{_cars.Length}";
-
-                // 3. Dissolvenza in entrata (Fade In)
-                DoubleAnimation fadeIn = new DoubleAnimation
-                {
-                    From = 0.0,
-                    To = 1.0,
-                    Duration = TimeSpan.FromSeconds(0.25)
-                };
-                fadeIn.Completed += (s2, ev2) => { _isAnimating = false; };
-
-                ShowcaseContentPanel.BeginAnimation(UIElement.OpacityProperty, fadeIn);
-                ShowcaseCarImage.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+                Kind = AnimationKind.FadeTo,
+                Opacity = 1.0,
+                Duration = 250
             };
+            Animations.SetPrimary(ShowcaseContentPanel, fadeIn);
+            Animations.SetPrimary(ShowcaseCarImage, fadeIn);
 
-            ShowcaseContentPanel.BeginAnimation(UIElement.OpacityProperty, fadeOut);
-            ShowcaseCarImage.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+            await Task.Delay(250);
+            _isAnimating = false;
         }
 
-        // ==========================================
-        // HERO GRID: SCROLL ALLA SEZIONE SHOWCASE
-        // ==========================================
-
-        private void ScrollToPolestar2_Click(object sender, RoutedEventArgs e) => SwitchToCarAndScroll(0);
-        private void ScrollToPolestar3_Click(object sender, RoutedEventArgs e) => SwitchToCarAndScroll(1);
-        private void ScrollToPolestar4_Click(object sender, RoutedEventArgs e) => SwitchToCarAndScroll(2);
-        private void ScrollToPolestar5_Click(object sender, RoutedEventArgs e) => SwitchToCarAndScroll(3);
-
-        private void SwitchToCarAndScroll(int index)
+        // Efectos hover en los modelos
+        private void HeroCard_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (_currentCarIndex != index)
+            if (sender is FrameworkElement elem && int.TryParse(elem.Tag?.ToString(), out int idx))
             {
-                TransitionToCar(index);
+                var filtro = idx switch { 1 => FiltroScuro1, 2 => FiltroScuro2, 3 => FiltroScuro3, _ => FiltroScuro4 };
+                var contenuto = idx switch { 1 => ContenutoHover1, 2 => ContenutoHover2, 3 => ContenutoHover3, _ => ContenutoHover4 };
+                Animations.SetPrimary(filtro, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 0.6, Duration = 300 });
+                Animations.SetPrimary(contenuto, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 1.0, Duration = 300 });
             }
-            SectionShowcase?.BringIntoView();
         }
 
-        // ==========================================
-        // SEZIONE BIG TEXT: HOVER PER FADE AUTO
-        // ==========================================
+        private void HeroCard_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is FrameworkElement elem && int.TryParse(elem.Tag?.ToString(), out int idx))
+            {
+                var filtro = idx switch { 1 => FiltroScuro1, 2 => FiltroScuro2, 3 => FiltroScuro3, _ => FiltroScuro4 };
+                var contenuto = idx switch { 1 => ContenutoHover1, 2 => ContenutoHover2, 3 => ContenutoHover3, _ => ContenutoHover4 };
+                Animations.SetPrimary(filtro, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 0.0, Duration = 300 });
+                Animations.SetPrimary(contenuto, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 0.0, Duration = 300 });
+            }
+        }
 
+        private void ScrollToPolestar2_Click(object sender, RoutedEventArgs e) => ViewModel.SelectCarCommand.Execute(0);
+        private void ScrollToPolestar3_Click(object sender, RoutedEventArgs e) => ViewModel.SelectCarCommand.Execute(1);
+        private void ScrollToPolestar4_Click(object sender, RoutedEventArgs e) => ViewModel.SelectCarCommand.Execute(2);
+        private void ScrollToPolestar5_Click(object sender, RoutedEventArgs e) => ViewModel.SelectCarCommand.Execute(3);
+
+        private void OnScrollRequested(string sectionName)
+        {
+            if (sectionName == "SectionShowcase")
+            {
+                SectionShowcase?.BringIntoView();
+            }
+            else if (sectionName == "SectionBigText")
+            {
+                SectionBigText?.BringIntoView();
+            }
+            else if (sectionName == "SectionHero")
+            {
+                SectionHero?.BringIntoView();
+            }
+        }
+
+        // Seccion Big Text
         private void MenuCar_MouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is TextBlock tb)
@@ -268,13 +212,14 @@ namespace polestar
                 for (int i = 0; i < _menuCarImages.Length; i++)
                 {
                     double targetOpacity = (i == targetIndex) ? 1.0 : 0.0;
-                    DoubleAnimation anim = new DoubleAnimation
+                    Animations.SetPrimary(_menuCarImages[i], new AnimationSettings
                     {
-                        To = targetOpacity,
-                        Duration = TimeSpan.FromSeconds(0.35),
-                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
-                    };
-                    _menuCarImages[i].BeginAnimation(UIElement.OpacityProperty, anim);
+                        Kind = AnimationKind.FadeTo,
+                        Opacity = targetOpacity,
+                        Duration = 350,
+                        Easing = EasingType.Quadratic,
+                        EasingMode = EasingMode.EaseOut
+                    });
                 }
             }
         }
@@ -292,7 +237,7 @@ namespace polestar
         {
             if (sender is FrameworkElement elem && int.TryParse(elem.Tag?.ToString(), out int targetIndex))
             {
-                SwitchToCarAndScroll(targetIndex);
+                ViewModel.SelectCarCommand.Execute(targetIndex);
             }
         }
     }

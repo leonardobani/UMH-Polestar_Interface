@@ -8,7 +8,6 @@
              Background="#111114">
 
     <UserControl.Resources>
-        <!-- Stile per le stelle nel cielo notturno Polestar (*) -->
         <Style x:Key="StarStyle" TargetType="TextBlock">
             <Setter Property="Text" Value="*" />
             <Setter Property="Foreground" Value="White" />
@@ -21,7 +20,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <!-- 1. Stelle nel cielo notturno Polestar (*) -->
+        <!-- Estrellas de fondo -->
         <Canvas>
             <TextBlock Style="{StaticResource StarStyle}" FontSize="24" Canvas.Left="85" Canvas.Top="85" Opacity="0.9" />
             <TextBlock Style="{StaticResource StarStyle}" FontSize="18" Canvas.Left="245" Canvas.Top="210" Opacity="0.65" />
@@ -30,7 +29,6 @@
             <TextBlock Style="{StaticResource StarStyle}" FontSize="16" Canvas.Left="685" Canvas.Top="245" Opacity="0.55" />
         </Canvas>
 
-        <!-- Pulsante Chiudi in alto a destra -->
         <Button x:Name="BtnCloseSearch" 
                 Width="44" Height="44" 
                 HorizontalAlignment="Right" 
@@ -39,7 +37,7 @@
                 Background="Transparent" 
                 BorderBrush="#55FFFFFF" 
                 BorderThickness="1" 
-                ToolTipService.ToolTip="Chiudi ricerca (Esc)"
+                ToolTipService.ToolTip="Cerrar (Esc)"
                 Click="BtnCloseSearch_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -56,17 +54,14 @@
             </Button.Template>
         </Button>
 
-        <!-- 2. Logo in alto al centro -->
         <Image Source="/images/logo.png" 
                Width="110" Height="110" 
                HorizontalAlignment="Center" 
                VerticalAlignment="Top" 
                Margin="0,95,0,0" />
 
-
-        <!-- 3. Strada orizzontale notturna in basso -->
+        <!-- Carretera -->
         <Canvas HorizontalAlignment="Center" VerticalAlignment="Top" Width="840" Height="840">
-            <!-- Superficie stradale asfaltata orizzontale -->
             <Rectangle Canvas.Left="0" Canvas.Top="600" Width="840" Height="240">
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -76,24 +71,21 @@
                 </Rectangle.Fill>
             </Rectangle>
 
-            <!-- Bordo superiore della strada (striscia continua di banchina) -->
             <Line X1="0" Y1="600" X2="840" Y2="600" 
                   Stroke="#55FFFFFF" 
                   StrokeThickness="2" />
 
-            <!-- Linea spartitraffico centrale tratteggiata orizzontale -->
             <Line X1="0" Y1="715" X2="840" Y2="715" 
                   Stroke="#77FFFFFF" 
                   StrokeThickness="2.5" 
                   StrokeDashArray="20 16" />
 
-            <!-- Bordo inferiore / banchina -->
             <Line X1="0" Y1="820" X2="840" Y2="820" 
                   Stroke="#33FFFFFF" 
                   StrokeThickness="1" />
         </Canvas>
 
-        <!-- 4. Pali di supporto del cartello stradale -->
+        <!-- Postes -->
         <Border Width="10" Height="220" 
                 Background="#1E1E24" 
                 BorderBrush="#55FFFFFF" 
@@ -110,7 +102,7 @@
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top" />
 
-        <!-- 5. Cartello Stradale: Search Bar con Casella di Testo e Freccia -->
+        <!-- Cartel de busqueda -->
         <Border Width="460" Height="96" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
@@ -125,7 +117,6 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Casella di input dove digitare ("Text") -->
                 <Grid Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock x:Name="SearchPlaceholder" 
                                Text="Text" 
@@ -142,13 +133,12 @@
                              TextChanged="SearchTextBox_TextChanged" />
                 </Grid>
 
-                <!-- Freccia di invio ricerca verso destra -->
                 <Button x:Name="BtnExecuteSearch" 
                         Grid.Column="1" 
                         Width="68" Height="46" 
                         Background="Transparent" 
                         BorderThickness="0" 
-                        ToolTipService.ToolTip="Cerca"
+                        ToolTipService.ToolTip="Buscar"
                         Click="BtnExecuteSearch_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -172,8 +162,7 @@
             </Grid>
         </Border>
 
-        <!-- Testo di suggerimento sotto al cartello -->
-        <TextBlock Text="Digita un modello (es. Polestar 2, 3, 4, 5) e premi Invio o la freccia" 
+        <TextBlock Text="Escribe un modelo (ej. Polestar 2, 3, 4, 5) y presiona Enter" 
                    Foreground="#66FFFFFF" 
                    FontSize="12" 
                    HorizontalAlignment="Center" 
@@ -181,4 +170,3 @@
                    Margin="0,425,0,0" />
     </Grid>
 </UserControl>
-

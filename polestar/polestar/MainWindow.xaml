@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:polestar"
+        xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
         mc:Ignorable="d"
         Title="Polestar" Height="840" Width="840"
         KeyDown="Window_KeyDown">
 
     <Window.Resources>
-        <!-- Stile per i link dell'header -->
         <Style x:Key="HeaderLinkStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#E0E0E0" />
             <Setter Property="FontSize" Value="14" />
@@ -23,7 +23,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Stile per i link del footer -->
         <Style x:Key="FooterLinkStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#9E9E9E" />
             <Setter Property="FontSize" Value="13" />
@@ -40,17 +39,11 @@
 
     <Grid Background="#111111">
         <Grid.RowDefinitions>
-            <!-- 1. HEADER (Sticky Top: resta sempre ancorato in cima) -->
             <RowDefinition Height="Auto" />
-            <!-- 2. CONTENUTO PRINCIPALE SCROLLABILE (Hero, Showcase, Big Text, Footer) -->
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- =================================================== -->
-        <!-- HEADER STICKY TOP                                   -->
-        <!--    Drawer button a sinistra, Logo con divisori al   -->
-        <!--    centro, Link e pulsante Search a destra          -->
-        <!-- =================================================== -->
+        <!-- Header -->
         <Border Grid.Row="0" 
                 Background="#111111" 
                 BorderBrush="#33FFFFFF" 
@@ -58,7 +51,6 @@
                 Height="65" 
                 Panel.ZIndex="100">
             <Grid>
-                <!-- Sinistra: Drawer Button -->
                 <Button x:Name="BtnDrawer" 
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Center" 
@@ -93,37 +85,39 @@
                     </Button.Template>
                 </Button>
 
-                <!-- Centro: Logo -->
                 <Image Source="/images/logo.png" 
                        Width="34" Height="34" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
                        Cursor="Hand" 
-                       ToolTip="Torna alla Home"
+                       ToolTip="Ir a Inicio"
                        MouseLeftButtonUp="LogoHeader_Click" />
 
-                <!-- Destra: Link e Pulsante Search -->
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Center" 
                             Margin="0,0,20,0">
                     
-                    <TextBlock Text="Link" 
+                    <TextBlock Text="Inicio" 
                                Style="{StaticResource HeaderLinkStyle}" 
-                               Margin="0,0,22,0" 
+                               Margin="0,0,20,0" 
                                MouseLeftButtonUp="HeaderLink1_Click" />
                     
-                    <TextBlock Text="Link" 
+                    <TextBlock Text="Galería" 
                                Style="{StaticResource HeaderLinkStyle}" 
-                               Margin="0,0,22,0" 
+                               Margin="0,0,20,0" 
                                MouseLeftButtonUp="HeaderLink2_Click" />
                     
-                    <TextBlock Text="Link" 
+                    <TextBlock Text="Modelos" 
                                Style="{StaticResource HeaderLinkStyle}" 
-                               Margin="0,0,24,0" 
+                               Margin="0,0,20,0" 
                                MouseLeftButtonUp="HeaderLink3_Click" />
 
-                    <!-- Search Button con icona lente e testo: apre la Search Page -->
+                    <TextBlock Text="Identificación" 
+                               Style="{StaticResource HeaderLinkStyle}" 
+                               Margin="0,0,24,0" 
+                               MouseLeftButtonUp="HeaderLogin_Click" />
+
                     <Border Background="#1F1F1F" 
                             BorderBrush="#44FFFFFF" 
                             BorderThickness="1" 
@@ -131,10 +125,9 @@
                             Height="34" 
                             Padding="12,0,14,0" 
                             Cursor="Hand" 
-                            ToolTip="Apri la pagina di ricerca"
+                            ToolTip="Buscar modelo"
                             MouseLeftButtonUp="HeaderSearch_Click">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <!-- Icona Lente di Ingrandimento -->
                             <TextBlock Text="🔍" 
                                        FontSize="12" 
                                        VerticalAlignment="Center" 
@@ -150,9 +143,6 @@
             </Grid>
         </Border>
 
-        <!-- =================================================== -->
-        <!-- CONTENUTO PRINCIPALE SCROLLABILE                    -->
-        <!-- =================================================== -->
         <ScrollViewer Grid.Row="1" 
                       x:Name="MainScrollViewer" 
                       VerticalScrollBarVisibility="Auto" 
@@ -160,9 +150,7 @@
                       CanContentScroll="False">
             <StackPanel Background="White">
 
-                <!-- =================================================== -->
-                <!-- 1. SEZIONE HERO: GRIGLIA 2x2 MODELLI & LOGO CENTRALE-->
-                <!-- =================================================== -->
+                <!-- Seccion Hero -->
                 <Grid x:Name="SectionHero" Height="800" Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -175,125 +163,80 @@
 
                     <!-- Polestar 2 -->
                     <Border Grid.Row="0" Grid.Column="0" Background="Black" Margin="5">
-                        <Grid Background="Transparent">
+                        <Grid Background="Transparent" MouseEnter="HeroCard_MouseEnter" MouseLeave="HeroCard_MouseLeave" Tag="1">
                             <Image Source="/images/2nature.png"/>
+                            
+                            <!-- Badge de oferta/campaña -->
+                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14" Background="#CC111114" CornerRadius="4" Padding="10,4">
+                                <TextBlock Text="OFERTA DESTACADA" Foreground="White" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+
                             <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
-                                <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
-                                <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar2_Click" />
+                                <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,6" />
+                                <TextBlock Text="Desde 44.900 € | Campaña 0% TAE" Foreground="#E0E0E0" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,16" />
+                                <Button Content="Configurar" Width="130" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Cursor="Hand" Click="ScrollToPolestar2_Click" />
                             </StackPanel>
-                            <Grid.Triggers>
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro1" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover1" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro1" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover1" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Grid.Triggers>
                         </Grid>
                     </Border>
 
                     <!-- Polestar 3 -->
                     <Border Grid.Row="0" Grid.Column="1" Background="Black" Margin="5">
-                        <Grid Background="Transparent">
+                        <Grid Background="Transparent" MouseEnter="HeroCard_MouseEnter" MouseLeave="HeroCard_MouseLeave" Tag="2">
                             <Image Source="/images/3nature.png"/>
+                            
+                            <!-- Badge de novedad -->
+                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14" Background="#CC111114" CornerRadius="4" Padding="10,4">
+                                <TextBlock Text="NOVEDAD SUV" Foreground="White" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+
                             <Rectangle x:Name="FiltroScuro2" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
-                                <TextBlock Text="Polestar 3" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
-                                <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar3_Click" />
+                                <TextBlock Text="Polestar 3" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,6" />
+                                <TextBlock Text="Desde 88.900 € | Entrega inmediata" Foreground="#E0E0E0" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,16" />
+                                <Button Content="Configurar" Width="130" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Cursor="Hand" Click="ScrollToPolestar3_Click" />
                             </StackPanel>
-                            <Grid.Triggers>
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro2" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover2" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro2" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover2" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Grid.Triggers>
                         </Grid>
                     </Border>
 
                     <!-- Polestar 4 -->
                     <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="5">
-                        <Grid Background="Transparent">
+                        <Grid Background="Transparent" MouseEnter="HeroCard_MouseEnter" MouseLeave="HeroCard_MouseLeave" Tag="3">
                             <Image Source="/images/4nature.png"/>
+                            
+                            <!-- Badge de campaña -->
+                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14" Background="#CC111114" CornerRadius="4" Padding="10,4">
+                                <TextBlock Text="CAMPAÑA 2026" Foreground="White" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+
                             <Rectangle x:Name="FiltroScuro3" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
-                                <TextBlock Text="Polestar 4" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
-                                <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar4_Click" />
+                                <TextBlock Text="Polestar 4" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,6" />
+                                <TextBlock Text="Desde 65.900 € | SUV Coupé" Foreground="#E0E0E0" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,16" />
+                                <Button Content="Configurar" Width="130" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Cursor="Hand" Click="ScrollToPolestar4_Click" />
                             </StackPanel>
-                            <Grid.Triggers>
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro3" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover3" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro3" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover3" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Grid.Triggers>
                         </Grid>
                     </Border>
 
                     <!-- Polestar 5 -->
                     <Border Grid.Row="1" Grid.Column="1" Background="Black" Margin="5">
-                        <Grid Background="Transparent">
+                        <Grid Background="Transparent" MouseEnter="HeroCard_MouseEnter" MouseLeave="HeroCard_MouseLeave" Tag="4">
                             <Image Source="/images/5nature.png"/>
+                            
+                            <!-- Badge de proximamente -->
+                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14" Background="#CC111114" CornerRadius="4" Padding="10,4">
+                                <TextBlock Text="PRÓXIMAMENTE" Foreground="White" FontSize="11" FontWeight="SemiBold" />
+                            </Border>
+
                             <Rectangle x:Name="FiltroScuro4" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
-                                <TextBlock Text="Polestar 5" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
-                                <Button Content="Configura ora" Width="125" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Click="ScrollToPolestar5_Click" />
+                                <TextBlock Text="Polestar 5" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,6" />
+                                <TextBlock Text="Gran Turismo 884 CV | Concept Precept" Foreground="#E0E0E0" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,16" />
+                                <Button Content="Descubrir" Width="130" Height="40" Background="Transparent" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="14" Cursor="Hand" Click="ScrollToPolestar5_Click" />
                             </StackPanel>
-                            <Grid.Triggers>
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro4" Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover4" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FiltroScuro4" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                            <DoubleAnimation Storyboard.TargetName="ContenutoHover4" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Grid.Triggers>
                         </Grid>
                     </Border>
 
-                    <!-- Logo Centrale -->
                     <Image Source="/images/logo.png" 
                            Grid.RowSpan="2" 
                            Grid.ColumnSpan="2" 
@@ -303,13 +246,9 @@
                            IsHitTestVisible="False" />
                 </Grid>
 
-                <!-- =================================================== -->
-                <!-- 2. SEZIONE SHOWCASE: 1 AUTO ALLA VOLTA CON CAROUSEL -->
-                <!--    Sfondo scuro, geometria logo ruotabile e fade    -->
-                <!-- =================================================== -->
+                <!-- Seccion Showcase -->
                 <Grid x:Name="SectionShowcase" Height="800" Background="#232323" ClipToBounds="True">
                     
-                    <!-- Geometria bianca del logo Polestar: ruota sul posto su se stessa al cambio auto -->
                     <Path x:Name="LogoGeometryPath" 
                           Fill="White" 
                           Data="M 12.549,0 L 12.092,0.555 V 11.746 H 23.282 L 23.836,11.289 L 14.436,9.399 Z M 0.719,12.26 L 0.164,12.717 L 9.563,14.6 L 11.449,24 L 11.906,23.445 V 12.26 Z"
@@ -324,17 +263,16 @@
                         </Path.RenderTransform>
                     </Path>
 
-                    <!-- Contenuto testuale (anima in dissolvenza/fade) -->
                     <StackPanel x:Name="ShowcaseContentPanel" Margin="90,55,90,0" VerticalAlignment="Top">
                         <TextBlock x:Name="ShowcaseHeading" 
-                                   Text="Polestar 3" 
+                                   Text="{Binding SelectedCar.Name}" 
                                    Foreground="White" 
                                    FontSize="34" 
                                    FontWeight="SemiBold" 
                                    Margin="0,0,0,16" />
 
                         <TextBlock x:Name="ShowcaseSubtitle" 
-                                   Text="Il SUV per l'era elettrica. Design scandinavo puro, prestazioni da sportiva e tecnologia avanzata." 
+                                   Text="{Binding SelectedCar.Subtitle}" 
                                    Foreground="#E0E0E0" 
                                    FontSize="13.5" 
                                    TextWrapping="Wrap" 
@@ -342,88 +280,75 @@
                                    Margin="0,0,0,18" />
 
                         <TextBlock x:Name="ShowcaseDescription" 
-                                   Text="Linee aerodinamiche scolpite con alettone integrato nel cofano e spoiler posteriore. Trazione integrale a doppio motore con fino a 517 CV, sospensioni pneumatiche attive e sensori radar all'avanguardia. Autonomia fino a 610 km WLTP e interni realizzati con materiali sostenibili certificati." 
+                                   Text="{Binding SelectedCar.Description}" 
                                    Foreground="#C5C5C5" 
                                    FontSize="13" 
                                    TextWrapping="Wrap" 
                                    LineHeight="20" 
                                    Margin="0,0,0,28" />
 
-                        <!-- Link orizzontali e CTA -->
                         <Grid Margin="0,6,0,0">
-                            <!-- Bottone decorato stile Sezione 1 per il link di sinistra -->
-                            <Button HorizontalAlignment="Left" 
-                                    Content="Configura ora" 
-                                    Width="135" Height="40" 
-                                    Background="Transparent" 
-                                    Foreground="White" 
-                                    BorderBrush="White" 
-                                    BorderThickness="1" 
-                                    FontSize="14" 
-                                    FontWeight="Medium" 
-                                    Cursor="Hand">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="btnBrd" 
-                                                Background="{TemplateBinding Background}" 
-                                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                                BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="btnBrd" Property="Background" Value="#25FFFFFF" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter TargetName="btnBrd" Property="Background" Value="#45FFFFFF" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-
-                            <!-- Link a destra allineati verticalmente al pulsante -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <TextBlock Text="Link" 
+                                <TextBlock Text="Ficha técnica" 
                                            Foreground="White" 
                                            FontSize="14" 
                                            TextDecorations="Underline" 
                                            Cursor="Hand" 
                                            Margin="0,0,35,0" />
-                                <TextBlock Text="Link" 
-                                           Foreground="White" 
-                                           FontSize="14" 
-                                           TextDecorations="Underline" 
-                                           Cursor="Hand" />
+                                <Button HorizontalAlignment="Left" 
+                                        Content="Configurar" 
+                                        Width="135" Height="40" 
+                                        Background="Transparent" 
+                                        Foreground="White" 
+                                        BorderBrush="White" 
+                                        BorderThickness="1" 
+                                        FontSize="14" 
+                                        FontWeight="Medium" 
+                                        Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="btnBrd" 
+                                                    Background="{TemplateBinding Background}" 
+                                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="btnBrd" Property="Background" Value="#25FFFFFF" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="btnBrd" Property="Background" Value="#45FFFFFF" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
 
-                    <!-- Immagine dell'auto (vista laterale, anima in dissolvenza/fade) -->
                     <Image x:Name="ShowcaseCarImage" 
-                           Source="/images/3side.png" 
+                           Source="{Binding SelectedCar.ImageSource}" 
                            Width="620" 
                            Stretch="Uniform" 
                            HorizontalAlignment="Center" 
                            VerticalAlignment="Bottom" 
                            Margin="0,0,0,105" />
 
-                    <!-- Controlli di navigazione in basso a destra -->
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right" 
                                 VerticalAlignment="Bottom" 
                                 Margin="0,0,45,40">
                         
-                        <!-- Contatore modello (es. 02 / 04) -->
                         <TextBlock x:Name="CarIndexText" 
-                                   Text="02 / 04" 
+                                   Text="{Binding CarIndexDisplay}" 
                                    Foreground="#888888" 
                                    FontSize="13" 
                                    FontWeight="SemiBold" 
                                    VerticalAlignment="Center" 
                                    Margin="0,0,20,0" />
 
-                        <!-- Pulsante freccia per passare alla prossima auto -->
                         <Button x:Name="BtnNextCar" 
                                 Width="48" Height="48" 
                                 Background="Transparent" 
@@ -463,13 +388,9 @@
 
                 </Grid>
 
-                <!-- =================================================== -->
-                <!-- 3. SEZIONE BIG TEXT: TESTO GIGANTE E HOVER CAR FADE -->
-                <!--    Menu a cascata che mostra l'auto al passaggio    -->
-                <!-- =================================================== -->
+                <!-- Seccion Modelos -->
                 <Grid x:Name="SectionBigText" Height="800" Background="White">
                     
-                    <!-- Voci di menu a cascata / diagonali con font grande -->
                     <StackPanel VerticalAlignment="Top" Margin="0,50,0,0">
                         <TextBlock Text="Polestar 2&gt;" 
                                    Tag="0" 
@@ -516,7 +437,7 @@
                                    MouseLeftButtonUp="MenuCar_Click" />
                     </StackPanel>
 
-                    <!-- Contenitore immagini auto sovrapposte con animazione di dissolvenza -->
+                    <!-- Imagenes de los coches -->
                     <Grid Height="300" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,40">
                         <Image x:Name="MenuCar0" Source="/images/2side.png" Width="680" Stretch="Uniform" Opacity="0" />
                         <Image x:Name="MenuCar1" Source="/images/3side.png" Width="680" Stretch="Uniform" Opacity="1" />
@@ -526,22 +447,16 @@
 
                 </Grid>
 
-                <!-- =================================================== -->
-                <!-- 4. SEZIONE FOOTER: BOX LOGO E 4 COLONNE DI LINK    -->
-                <!-- =================================================== -->
+                <!-- Footer -->
                 <Grid x:Name="SectionFooter" MinHeight="440" Background="#111111">
                     <Grid.RowDefinitions>
-                        <!-- Riga principale con Logo e Colonne Link -->
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <!-- Box Logo a sinistra -->
                         <ColumnDefinition Width="280" />
-                        <!-- 4 Colonne link a destra -->
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- Logo a sinistra -->
                     <Image Grid.Column="0" 
                            Source="/images/logo.png" 
                            Width="100" Height="100" 
@@ -549,8 +464,11 @@
                            VerticalAlignment="Top" 
                            Margin="25,90,20,45" />
 
-                    <!-- 4 Colonne di Link a destra -->
                     <Grid Grid.Column="1" Margin="10,45,30,45">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -558,78 +476,57 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Colonna 1 -->
-                        <StackPanel Grid.Column="0" Margin="0,0,15,0">
-                            <TextBlock Text="Autosize Title" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,18" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,15,0">
+                            <TextBlock Text="Modelos" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,16" />
+                            <TextBlock Text="Polestar 2" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Polestar 3" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Polestar 4" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Polestar 5" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Comparativa de gama" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Vehículos preconfigurados" Style="{StaticResource FooterLinkStyle}" />
                         </StackPanel>
 
-                        <!-- Colonna 2 -->
-                        <StackPanel Grid.Column="1" Margin="0,0,15,0">
-                            <TextBlock Text="Autosize Title" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,18" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
+                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,15,0">
+                            <TextBlock Text="Comprar" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,16" />
+                            <TextBlock Text="Ofertas y financiación" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Prueba de conducción" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Polestar for Business" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Entrega inmediata" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Tasación de vehículo usado" Style="{StaticResource FooterLinkStyle}" />
                         </StackPanel>
 
-                        <!-- Colonna 3 -->
-                        <StackPanel Grid.Column="2" Margin="0,0,15,0">
-                            <TextBlock Text="Autosize Title" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,18" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
+                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,15,0">
+                            <TextBlock Text="Sostenibilidad" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,16" />
+                            <TextBlock Text="Objetivo Cero Emisiones" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Huella de carbono verificada" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Materiales sostenibles" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Trazabilidad de baterías" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Actualizaciones de software OTA" Style="{StaticResource FooterLinkStyle}" />
                         </StackPanel>
 
-                        <!-- Colonna 4 -->
-                        <StackPanel Grid.Column="3">
-                            <TextBlock Text="Autosize Title" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,18" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
-                            <TextBlock Text="Link" Style="{StaticResource FooterLinkStyle}" />
+                        <StackPanel Grid.Row="0" Grid.Column="3">
+                            <TextBlock Text="Ayuda y Contacto" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,16" />
+                            <TextBlock Text="Spaces Polestar en España" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Centro de atención al cliente" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Guías y manuales" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Red de recarga pública" Style="{StaticResource FooterLinkStyle}" />
+                            <TextBlock Text="Aviso legal y privacidad" Style="{StaticResource FooterLinkStyle}" />
                         </StackPanel>
+
+                        <!-- Pie de pagina con derechos y referencia a la asignatura -->
+                        <Border Grid.Row="1" Grid.ColumnSpan="4" Margin="0,32,0,0" BorderBrush="#22FFFFFF" BorderThickness="0,1,0,0" Padding="0,20,0,0">
+                            <TextBlock Text="© 2026 Polestar Performance AB. Práctica 1 - Interfaces de Usuario, Universidad Miguel Hernández (UMH)." 
+                                       Foreground="#66FFFFFF" 
+                                       FontSize="12" 
+                                       HorizontalAlignment="Center" />
+                        </Border>
                     </Grid>
                 </Grid>
 
             </StackPanel>
         </ScrollViewer>
 
-        <!-- =================================================== -->
-        <!-- 5. SEARCH VIEW (COMPONENTIZZATA IN SearchView.xaml) -->
-        <!-- =================================================== -->
+        <!-- Overlay de busqueda -->
         <local:SearchView x:Name="SearchOverlay" 
                           Grid.RowSpan="2" 
                           Visibility="Collapsed" 
