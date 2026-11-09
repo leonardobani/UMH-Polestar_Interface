@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace polestar
 {
@@ -16,6 +17,13 @@ namespace polestar
         public SearchView()
         {
             InitializeComponent();
+
+            // Configurazione proprietà native WPF da codice per compatibilità con i previewer XAML
+            BtnCloseSearch.Cursor = Cursors.Hand;
+            BtnExecuteSearch.Cursor = Cursors.Hand;
+            SearchPlaceholder.IsHitTestVisible = false;
+            SearchTextBox.CaretBrush = Brushes.White;
+            SearchTextBox.KeyDown += SearchTextBox_KeyDown;
         }
 
         public void FocusInput()

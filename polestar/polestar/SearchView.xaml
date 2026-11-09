@@ -4,29 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="840" d:DesignWidth="840"
+             Width="840" Height="840"
              Background="#111114">
 
     <UserControl.Resources>
-        <!-- Stile per le stelle a 5 punte vettoriali del cielo notturno -->
-        <Style x:Key="StarStyle" TargetType="Path">
-            <Setter Property="Data" Value="M 12.0,0.0 L 14.9,8.0 L 23.4,8.3 L 16.8,13.5 L 19.1,21.7 L 12.0,17.0 L 4.9,21.7 L 7.2,13.5 L 0.6,8.3 L 9.1,8.0 Z" />
-            <Setter Property="Stroke" Value="White" />
-            <Setter Property="StrokeThickness" Value="1.4" />
-            <Setter Property="Fill" Value="Transparent" />
-            <Setter Property="Width" Value="24" />
-            <Setter Property="Height" Value="24" />
+        <!-- Stile per le stelle nel cielo notturno Polestar (*) -->
+        <Style x:Key="StarStyle" TargetType="TextBlock">
+            <Setter Property="Text" Value="*" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Opacity" Value="0.8" />
+            <Setter Property="IsHitTestVisible" Value="False" />
         </Style>
     </UserControl.Resources>
 
     <Grid>
-        <!-- 1. Stelle nel cielo notturno Polestar -->
+        <!-- 1. Stelle nel cielo notturno Polestar (*) -->
         <Canvas>
-            <Path Style="{StaticResource StarStyle}" Canvas.Left="85" Canvas.Top="90" />
-            <Path Style="{StaticResource StarStyle}" Canvas.Left="245" Canvas.Top="215" />
-            <Path Style="{StaticResource StarStyle}" Canvas.Left="515" Canvas.Top="95" />
-            <Path Style="{StaticResource StarStyle}" Canvas.Left="655" Canvas.Top="135" />
-            <Path Style="{StaticResource StarStyle}" Canvas.Left="685" Canvas.Top="250" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="24" Canvas.Left="85" Canvas.Top="85" Opacity="0.9" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="18" Canvas.Left="245" Canvas.Top="210" Opacity="0.65" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="20" Canvas.Left="515" Canvas.Top="90" Opacity="0.75" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="26" Canvas.Left="655" Canvas.Top="130" Opacity="0.9" />
+            <TextBlock Style="{StaticResource StarStyle}" FontSize="16" Canvas.Left="685" Canvas.Top="245" Opacity="0.55" />
         </Canvas>
 
         <!-- Pulsante Chiudi in alto a destra -->
@@ -38,8 +39,7 @@
                 Background="Transparent" 
                 BorderBrush="#55FFFFFF" 
                 BorderThickness="1" 
-                Cursor="Hand" 
-                ToolTip="Chiudi ricerca (Esc)"
+                ToolTipService.ToolTip="Chiudi ricerca (Esc)"
                 Click="BtnCloseSearch_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -70,19 +70,35 @@
             </StackPanel>
         </Border>
 
-        <!-- 3. Strada curvilinea in basso -->
-        <Path Data="M 0,660 C 140,650 200,560 260,480 C 350,465 580,470 840,480 L 840,580 C 620,570 420,560 310,570 C 260,650 220,780 140,840 L 0,840 Z" 
-              Fill="#17171C" 
-              Stroke="#55FFFFFF" 
-              StrokeThickness="1.5" 
-              VerticalAlignment="Bottom" />
 
-        <!-- Linea spartitraffico tratteggiata -->
-        <Path Data="M 70,750 C 180,710 230,605 285,525 C 380,512 600,520 840,530" 
-              Stroke="#33FFFFFF" 
-              StrokeThickness="1.5" 
-              StrokeDashArray="6 6" 
-              VerticalAlignment="Bottom" />
+        <!-- 3. Strada in prospettiva (autostrada notturna Polestar) -->
+        <Canvas HorizontalAlignment="Center" VerticalAlignment="Top" Width="840" Height="840">
+            <!-- Superficie stradale asfaltata -->
+            <Polygon Points="260,460 580,460 840,840 0,840">
+                <Polygon.Fill>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#131317" Offset="0" />
+                        <GradientStop Color="#181822" Offset="1" />
+                    </LinearGradientBrush>
+                </Polygon.Fill>
+            </Polygon>
+
+            <!-- Corsia / Bordo sinistro (striscia continua) -->
+            <Line X1="260" Y1="460" X2="30" Y2="840" 
+                  Stroke="#55FFFFFF" 
+                  StrokeThickness="2" />
+
+            <!-- Corsia / Bordo destro (striscia continua) -->
+            <Line X1="580" Y1="460" X2="810" Y2="840" 
+                  Stroke="#55FFFFFF" 
+                  StrokeThickness="2" />
+
+            <!-- Linea di mezzeria tratteggiata centrale -->
+            <Line X1="420" Y1="460" X2="420" Y2="840" 
+                  Stroke="#77FFFFFF" 
+                  StrokeThickness="2.5" 
+                  StrokeDashArray="14 12" />
+        </Canvas>
 
         <!-- 4. Pali del cartello stradale -->
         <Border Width="10" Height="80" 
@@ -123,17 +139,14 @@
                                Foreground="#66FFFFFF" 
                                FontSize="22" 
                                FontWeight="Light" 
-                               IsHitTestVisible="False" 
                                Margin="4,0,0,0" />
                     <TextBox x:Name="SearchTextBox" 
                              Background="Transparent" 
                              Foreground="White" 
-                             CaretBrush="White" 
                              BorderThickness="0" 
                              FontSize="22" 
                              VerticalAlignment="Center" 
-                             TextChanged="SearchTextBox_TextChanged" 
-                             KeyDown="SearchTextBox_KeyDown" />
+                             TextChanged="SearchTextBox_TextChanged" />
                 </Grid>
 
                 <!-- Freccia di invio ricerca verso destra -->
@@ -142,8 +155,7 @@
                         Width="68" Height="46" 
                         Background="Transparent" 
                         BorderThickness="0" 
-                        Cursor="Hand" 
-                        ToolTip="Cerca"
+                        ToolTipService.ToolTip="Cerca"
                         Click="BtnExecuteSearch_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
