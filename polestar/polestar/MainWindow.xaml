@@ -93,19 +93,14 @@
                     </Button.Template>
                 </Button>
 
-                <!-- Centro: Vano Logo con linee verticali divisorie -->
-                <Border BorderBrush="#33FFFFFF" 
-                        BorderThickness="1,0,1,0" 
-                        Width="85" 
-                        HorizontalAlignment="Center">
-                    <Image Source="/images/logo.png" 
-                           Width="34" Height="34" 
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center" 
-                           Cursor="Hand" 
-                           ToolTip="Torna alla Home"
-                           MouseLeftButtonUp="LogoHeader_Click" />
-                </Border>
+                <!-- Centro: Logo -->
+                <Image Source="/images/logo.png" 
+                       Width="34" Height="34" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Cursor="Hand" 
+                       ToolTip="Torna alla Home"
+                       MouseLeftButtonUp="LogoHeader_Click" />
 
                 <!-- Destra: Link e Pulsante Search -->
                 <StackPanel Orientation="Horizontal" 
@@ -140,13 +135,10 @@
                             MouseLeftButtonUp="HeaderSearch_Click">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <!-- Icona Lente di Ingrandimento -->
-                            <Path Data="M 6,6 A 4,4 0 1,0 6,14 A 4,4 0 1,0 6,6 M 12,12 L 17,17" 
-                                  Stroke="White" 
-                                  StrokeThickness="1.8" 
-                                  StrokeStartLineCap="Round" 
-                                  StrokeEndLineCap="Round" 
-                                  VerticalAlignment="Center" 
-                                  Margin="0,0,7,0" />
+                            <TextBlock Text="🔍" 
+                                       FontSize="12" 
+                                       VerticalAlignment="Center" 
+                                       Margin="0,0,6,0" />
                             <TextBlock Text="Search" 
                                        Foreground="White" 
                                        FontSize="13" 
@@ -519,25 +511,13 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- Box con bordo per il Logo a sinistra -->
-                    <Border Grid.Column="0" 
-                            BorderBrush="#33FFFFFF" 
-                            BorderThickness="1" 
-                            Width="230" Height="290" 
-                            Margin="25,45,20,45" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Top">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Image Source="/images/logo.png" 
-                                   Width="90" Height="90" 
-                                   HorizontalAlignment="Center" 
-                                   Margin="0,0,0,15" />
-                            <TextBlock Text="Logo" 
-                                       Foreground="#888888" 
-                                       FontSize="14" 
-                                       HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </Border>
+                    <!-- Logo a sinistra -->
+                    <Image Grid.Column="0" 
+                           Source="/images/logo.png" 
+                           Width="100" Height="100" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Top" 
+                           Margin="25,90,20,45" />
 
                     <!-- 4 Colonne di Link a destra -->
                     <Grid Grid.Column="1" Margin="10,45,30,45">

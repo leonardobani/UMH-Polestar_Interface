@@ -56,19 +56,12 @@
             </Button.Template>
         </Button>
 
-        <!-- 2. Riquadro Logo in alto al centro -->
-        <Border Width="260" Height="260" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Top" 
-                Margin="0,35,0,0" 
-                BorderBrush="#44FFFFFF" 
-                BorderThickness="1" 
-                Background="#15151A">
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Image Source="/images/logo.png" Width="95" Height="95" HorizontalAlignment="Center" Margin="0,0,0,14" />
-                <TextBlock Text="Logo" Foreground="#888888" FontSize="14" HorizontalAlignment="Center" />
-            </StackPanel>
-        </Border>
+        <!-- 2. Logo in alto al centro -->
+        <Image Source="/images/logo.png" 
+               Width="110" Height="110" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Top" 
+               Margin="0,95,0,0" />
 
 
         <!-- 3. Strada in prospettiva (autostrada notturna Polestar) -->
