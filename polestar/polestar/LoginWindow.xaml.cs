@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using XamlFlair;
+using polestar.Utils;
 
 namespace polestar
 {
@@ -16,14 +16,7 @@ namespace polestar
 
             Loaded += (s, e) =>
             {
-                Animations.SetPrimary(FormLoginPanel, new AnimationSettings
-                {
-                    Kind = AnimationKind.FadeTo,
-                    Opacity = 1.0,
-                    Duration = 550,
-                    Easing = EasingType.Cubic,
-                    EasingMode = EasingMode.EaseOut
-                });
+                AnimationHelper.FadeTo(FormLoginPanel, 1.0, 550);
             };
         }
 
@@ -75,23 +68,8 @@ namespace polestar
             btnLogin.IsEnabled = false;
 
             // Animacion de salida y zoom del logo
-            Animations.SetPrimary(FormControlsPanel, new AnimationSettings
-            {
-                Kind = AnimationKind.FadeTo,
-                Opacity = 0.0,
-                Duration = 250
-            });
-
-            Animations.SetPrimary(LogoImage, new AnimationSettings
-            {
-                Kind = AnimationKind.FadeTo | AnimationKind.ScaleXTo | AnimationKind.ScaleYTo,
-                ScaleX = 5.0,
-                ScaleY = 5.0,
-                Opacity = 0.0,
-                Duration = 600,
-                Easing = EasingType.Cubic,
-                EasingMode = EasingMode.EaseIn
-            });
+            AnimationHelper.FadeTo(FormControlsPanel, 0.0, 250);
+            AnimationHelper.ScaleAndFade(LogoImage, 5.0, 0.0, 600);
 
             await Task.Delay(600);
 

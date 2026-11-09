@@ -57,9 +57,9 @@ El enunciado de la práctica establece directrices funcionales y de diseño espe
 
 ### 2.3. Política de Animaciones: Uso y No Abuso
 * *Requisito:* Uso obligatorio pero mesurado de elementos animados, evitando distraer o ralentizar al usuario.
-* *Solución adoptada:* Se ha descartado el uso de transiciones complejas o continuas que causen fatiga visual. Todas las animaciones han sido unificadas mediante la biblioteca declarativa `XamlFlair.WPF`:
-  * *Entrada inicial:* Desvanecimiento sutil (`FadeInAndSlideFromBottom`) de 550 ms para suavizar la carga de la ventana.
-  * *Transición de login:* Zoom focalizado en el logotipo durante 600 ms con aceleración cúbica.
+* *Solución adoptada:* Se ha descartado el uso de transiciones complejas o continuas que causen fatiga visual. Todas las animaciones han sido unificadas mediante la clase de utilidad nativa `AnimationHelper` con curvas de aceleración estándar (`CubicEase`, `QuadraticEase`):
+  * *Entrada inicial:* Desvanecimiento sutil (`FadeTo`) de 550 ms para suavizar la carga de la ventana.
+  * *Transición de login:* Zoom focalizado en el logotipo durante 600 ms con aceleración cúbica (`ScaleAndFade`).
   * *Cambio de vehículo:* Rotación coordinada del emblema geométrico de fondo (180°) y desvanecimiento cruzado de 250 ms en los textos y silueta del vehículo.
   * *Búsqueda:* Aparición modal atenuada de 280 ms.
 
@@ -68,24 +68,26 @@ El enunciado de la práctica establece directrices funcionales y de diseño espe
 ## 3. Arquitectura del Software y Flujo de Navegación
 
 ### 3.1. Patrón Arquitectónico MVVM
-Para evitar la concentración de lógica en el código subyacente (*code-behind*) y garantizar un código desacoplado y profesional, el proyecto se estructura bajo el patrón **Model-View-ViewModel (MVVM)** asistido por el conjunto de herramientas oficial `CommunityToolkit.Mvvm`:
+Para evitar la concentración de lógica en el código subyacente (*code-behind*) y garantizar un código desacoplado y profesional, el proyecto se estructura bajo el patrón **Model-View-ViewModel (MVVM)** asistido por la biblioteca oficial de Microsoft **`CommunityToolkit.Mvvm`** (v8.4.0):
 
 ```
 polestar/
 ├── Models/
 │   └── CarModel.cs            # Entidad de datos del vehículo
 ├── ViewModels/
-│   └── MainViewModel.cs       # Lógica de presentación, colecciones y comandos
+│   └── MainViewModel.cs       # Lógica de presentación con CommunityToolkit.Mvvm
 ├── Views/
 │   ├── LoginWindow.xaml       # Vista de identificación
 │   ├── MainWindow.xaml        # Vista principal (Inicio + Galería + Catálogo)
 │   └── SearchView.xaml        # UserControl de búsqueda modal
-├── App.xaml                   # Recursos globales y configuración XamlFlair
+├── Utils/
+│   └── AnimationHelper.cs     # Motor de animación fluida nativa
+├── App.xaml                   # Recursos globales de la aplicación
 └── images/                    # Recursos multimedia locales
 ```
 
 * **`CarModel`:** Representa los atributos del vehículo (nombre, subtítulo, descripción técnica, silueta lateral, fotografía en entorno real y etiquetas comerciales).
-* **`MainViewModel`:** Hereda de `ObservableObject`. Gestiona la lista observable `ObservableCollection<CarModel>`, la selección activa `SelectedCar`, los indicadores de índice y los comandos reactivos (`NextCarCommand`, `SelectCarCommand`, `OpenSearchCommand`, `ExecuteSearchCommand`) decorados con `[RelayCommand]`.
+* **`MainViewModel`:** Hereda de `ObservableObject`. Gestiona la lista observable `ObservableCollection<CarModel>`, la selección activa `SelectedCar`, los indicadores de índice y los comandos reactivos (`NextCarCommand`, `SelectCarCommand`, `OpenSearchCommand`, `ExecuteSearchCommand`) generados limpiamente mediante los atributos `[ObservableProperty]` y `[RelayCommand]`.
 * **Vistas XAML:** Consumen las propiedades mediante *DataBinding* bidireccional y unidireccional nativo (`{Binding SelectedCar.Name}`, `{Binding SelectedCar.Description}`), liberando a la vista de manipulaciones manuales de controles.
 
 ### 3.2. Diagrama de Navegación
@@ -158,26 +160,21 @@ Durante la fase de construcción se ejecutó un plan sistemático de pruebas fun
 * **Incidencia de doble apertura de ventana:**
   * *Problema:* Al completar la animación de login, la ventana principal `MainWindow` se instanciaba dos veces en pantalla.
   * *Causa identificada:* El evento `Completed` de la animación se había asociado tanto a la propiedad `ScaleX` como a `ScaleY`, provocando dos disparos concurrentes del manejador.
-  * *Solución aplicada:* Desacoplamiento del evento de ventana y temporización asíncrona limpia mediante `await Task.Delay(600)` sincronizada con la duración de `XamlFlair`.
-* **Conflicto de sobrecarga de Storyboards nativos:**
-  * *Problema:* El mantenimiento de múltiples objetos `DoubleAnimation` y `Storyboard` en el código subyacente reducía la legibilidad y aumentaba el riesgo de fugas de eventos.
-  * *Solución aplicada:* Sustitución por `XamlFlair.WPF`, estandarizando los parámetros de aceleración (`CubicEase`) y reduciendo el código en más de 60 líneas.
+  * *Solución aplicada:* Desacoplamiento del evento de ventana y temporización asíncrona limpia mediante `await Task.Delay(600)` sincronizada con la duración de la animación.
+* **Encapsulación y modularidad de animaciones:**
+  * *Problema:* El mantenimiento de múltiples objetos `DoubleAnimation` dispersos en el código subyacente reducía la legibilidad y aumentaba el acoplamiento.
+  * *Solución aplicada:* Centralización de las transiciones en `AnimationHelper`, estandarizando los parámetros de aceleración (`CubicEase`, `QuadraticEase`) y garantizando una experiencia visual homogénea y fluida.
 
 ---
 
 ## 6. Recursos, Bibliotecas y Licencias de Terceros
 
-Todos los recursos externos empleados en el desarrollo han sido seleccionados bajo criterios de código abierto y licencias permisivas:
-
 1. **Framework base:** Microsoft .NET 8.0 SDK y Windows Presentation Foundation (WPF).
-2. **CommunityToolkit.Mvvm (v8.4.2):**
-   * *Autor:* .NET Foundation / Microsoft Community.
+2. **CommunityToolkit.Mvvm (v8.4.0):**
+   * *Autor:* Microsoft / .NET Foundation.
    * *Licencia:* MIT License.
-   * *Aportación:* Infraestructura reactiva para la implementación de MVVM, generación de propiedades observables y comandos desacoplados.
-3. **XamlFlair.WPF (v1.2.13):**
-   * *Autor:* Jean-Philippe LeBlanc.
-   * *Licencia:* MIT License.
-   * *Aportación:* Motor de animaciones declarativas de alto rendimiento para WPF, simplificando efectos de desvanecimiento, desplazamientos y escalas.
+   * *Aportación:* Biblioteca oficial de Microsoft para la implementación del patrón MVVM en .NET moderno, aprovechando los generadores de código fuente C# para producir automáticamente las propiedades observables (`[ObservableProperty]`) y los comandos de interfaz (`[RelayCommand]`).
+3. **Motor de animaciones:** Módulo de utilidades nativo `AnimationHelper` basado en `DoubleAnimation` y transformaciones vectoriales de WPF aceleradas por GPU.
 4. **Recursos Gráficos y Logotipos:**
    * Material gráfico corporativo de Polestar Performance AB (fotografías de modelos en carretera y siluetas oficiales en PNG con transparencia).
    * *Condiciones de uso:* Empleados estrictamente con fines académicos y de concurso universitario sin ánimo de lucro al amparo del derecho de cita y estudio.

@@ -6,7 +6,7 @@ Prototipo de aplicación de escritorio interactiva en **WPF (.NET 8)** para **Po
 
 ## 📌 Documentación Oficial de la Entrega
 
-* 📄 **[Memoria Técnica Completa (MEMORIA_TECNICA.md)](MEMORIA_TECNICA.md):** Justificación de diseño, heurísticas de usabilidad de Nielsen, accesibilidad, arquitectura MVVM, plan de pruebas y licencias.
+* 📄 **[Memoria Técnica Completa (MEMORIA_TECNICA.md)](MEMORIA_TECNICA.md):** Justificación de diseño, heurísticas de usabilidad de Nielsen, accesibilidad, arquitectura MVVM, plan de pruebas y código.
 * 🤖 **[Registro de Uso de Inteligencia Artificial (MEMORIA_USO_IA.md)](MEMORIA_USO_IA.md):** Declaración ética, registro cronológico de prompts, respuestas de la IA y análisis crítico de aportación del alumno según las directrices de la UMH.
 
 ---
@@ -29,10 +29,9 @@ La aplicación reproduce la experiencia digital y el lenguaje de diseño escandi
 ## 🛠️ Tecnologías y Arquitectura
 
 * **Plataforma:** .NET 8.0 WPF (Windows Presentation Foundation)
-* **Patrón de Arquitectura:** MVVM (Model-View-ViewModel)
-* **Bibliotecas NuGet:**
-  * `CommunityToolkit.Mvvm` (v8.4.2) - Gestión de estado, propiedades observables (`ObservableProperty`) y comandos (`RelayCommand`).
-  * `XamlFlair.WPF` (v1.2.13) - Animaciones declarativas de alto rendimiento con curvas de aceleración naturales.
+* **Patrón de Arquitectura:** MVVM (Model-View-ViewModel) estructurado con la biblioteca oficial **`CommunityToolkit.Mvvm`** (v8.4.0) de Microsoft, utilizando generadores de código fuente (`ObservableObject`, `[ObservableProperty]`, `[RelayCommand]`).
+* **Sistema de Animaciones:** Motor nativo de animaciones WPF acelerado por GPU (`AnimationHelper`, `DoubleAnimation`) con curvas de aceleración suaves (`CubicEase`, `QuadraticEase`).
+* **Compatibilidad:** 100% compatible con Visual Studio 2022 y Microsoft Blend sobre .NET 8.
 
 ---
 
@@ -43,8 +42,9 @@ La aplicación reproduce la experiencia digital y el lenguaje de diseño escandi
    git clone https://gitlab.com/leorise25/umh-polestar_interface.git
    ```
 2. Abrir la solución `polestar/polestar.sln` en **Microsoft Visual Studio 2022** o **Microsoft Blend**.
-3. Restaurar paquetes NuGet y compilar la solución (`Ctrl + Shift + B`).
-4. Ejecutar el proyecto (`F5`).
+3. Restaurar paquetes NuGet (si no es automático: clic derecho en la solución -> *Restaurar paquetes NuGet*).
+4. Compilar la solución (`Ctrl + Shift + B`).
+5. Ejecutar el proyecto (`F5`).
 
 ---
 

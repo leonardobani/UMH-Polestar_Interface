@@ -4,8 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using polestar.Utils;
 using polestar.ViewModels;
-using XamlFlair;
 
 namespace polestar
 {
@@ -63,23 +63,13 @@ namespace polestar
         private void OpenSearchOverlay()
         {
             SearchOverlay.Visibility = Visibility.Visible;
-            Animations.SetPrimary(SearchOverlay, new AnimationSettings
-            {
-                Kind = AnimationKind.FadeTo,
-                Opacity = 1.0,
-                Duration = 280
-            });
+            AnimationHelper.FadeTo(SearchOverlay, 1.0, 280);
             SearchOverlay.FocusInput();
         }
 
         private async void CloseSearchOverlay()
         {
-            Animations.SetPrimary(SearchOverlay, new AnimationSettings
-            {
-                Kind = AnimationKind.FadeTo,
-                Opacity = 0.0,
-                Duration = 200
-            });
+            AnimationHelper.FadeTo(SearchOverlay, 0.0, 200);
             await Task.Delay(200);
             SearchOverlay.Visibility = Visibility.Collapsed;
         }
@@ -116,37 +106,18 @@ namespace polestar
 
             // Rotar logo
             double targetAngle = _currentAngle + RotationStep;
-            Animations.SetPrimary(LogoGeometryPath, new AnimationSettings
-            {
-                Kind = AnimationKind.RotateTo,
-                Rotation = targetAngle,
-                Duration = 600,
-                Easing = EasingType.Cubic,
-                EasingMode = EasingMode.EaseInOut
-            });
+            AnimationHelper.RotateTo(LogoGeometryPath, targetAngle, 600);
             _currentAngle = targetAngle;
 
             // Fade out
-            var fadeOut = new AnimationSettings
-            {
-                Kind = AnimationKind.FadeTo,
-                Opacity = 0.0,
-                Duration = 250
-            };
-            Animations.SetPrimary(ShowcaseContentPanel, fadeOut);
-            Animations.SetPrimary(ShowcaseCarImage, fadeOut);
+            AnimationHelper.FadeTo(ShowcaseContentPanel, 0.0, 250);
+            AnimationHelper.FadeTo(ShowcaseCarImage, 0.0, 250);
 
             await Task.Delay(250);
 
             // Fade in (los datos se actualizan por binding)
-            var fadeIn = new AnimationSettings
-            {
-                Kind = AnimationKind.FadeTo,
-                Opacity = 1.0,
-                Duration = 250
-            };
-            Animations.SetPrimary(ShowcaseContentPanel, fadeIn);
-            Animations.SetPrimary(ShowcaseCarImage, fadeIn);
+            AnimationHelper.FadeTo(ShowcaseContentPanel, 1.0, 250);
+            AnimationHelper.FadeTo(ShowcaseCarImage, 1.0, 250);
 
             await Task.Delay(250);
             _isAnimating = false;
@@ -159,8 +130,8 @@ namespace polestar
             {
                 var filtro = idx switch { 1 => FiltroScuro1, 2 => FiltroScuro2, 3 => FiltroScuro3, _ => FiltroScuro4 };
                 var contenuto = idx switch { 1 => ContenutoHover1, 2 => ContenutoHover2, 3 => ContenutoHover3, _ => ContenutoHover4 };
-                Animations.SetPrimary(filtro, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 0.6, Duration = 300 });
-                Animations.SetPrimary(contenuto, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 1.0, Duration = 300 });
+                AnimationHelper.FadeTo(filtro, 0.6, 300);
+                AnimationHelper.FadeTo(contenuto, 1.0, 300);
             }
         }
 
@@ -170,8 +141,8 @@ namespace polestar
             {
                 var filtro = idx switch { 1 => FiltroScuro1, 2 => FiltroScuro2, 3 => FiltroScuro3, _ => FiltroScuro4 };
                 var contenuto = idx switch { 1 => ContenutoHover1, 2 => ContenutoHover2, 3 => ContenutoHover3, _ => ContenutoHover4 };
-                Animations.SetPrimary(filtro, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 0.0, Duration = 300 });
-                Animations.SetPrimary(contenuto, new AnimationSettings { Kind = AnimationKind.FadeTo, Opacity = 0.0, Duration = 300 });
+                AnimationHelper.FadeTo(filtro, 0.0, 300);
+                AnimationHelper.FadeTo(contenuto, 0.0, 300);
             }
         }
 
@@ -212,14 +183,7 @@ namespace polestar
                 for (int i = 0; i < _menuCarImages.Length; i++)
                 {
                     double targetOpacity = (i == targetIndex) ? 1.0 : 0.0;
-                    Animations.SetPrimary(_menuCarImages[i], new AnimationSettings
-                    {
-                        Kind = AnimationKind.FadeTo,
-                        Opacity = targetOpacity,
-                        Duration = 350,
-                        Easing = EasingType.Quadratic,
-                        EasingMode = EasingMode.EaseOut
-                    });
+                    AnimationHelper.FadeTo(_menuCarImages[i], targetOpacity, 350);
                 }
             }
         }

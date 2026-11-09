@@ -11,7 +11,7 @@ namespace polestar.ViewModels
         public ObservableCollection<CarModel> Cars { get; } = new();
 
         [ObservableProperty]
-        private CarModel _selectedCar;
+        private CarModel _selectedCar = null!;
 
         [ObservableProperty]
         private int _selectedCarIndex = 0;
@@ -21,12 +21,6 @@ namespace polestar.ViewModels
 
         [ObservableProperty]
         private bool _isSearchOpen = false;
-
-        [ObservableProperty]
-        private double _logoRotationAngle = 0;
-
-        [ObservableProperty]
-        private int _hoveredMenuCarIndex = -1;
 
         public event Action<int>? CarTransitionRequested;
         public event Action? SearchOpenRequested;
@@ -115,9 +109,14 @@ namespace polestar.ViewModels
         }
 
         [RelayCommand]
-        private void ExecuteSearch(string query)
+        private void ExecuteSearch(string? query)
         {
             CloseSearch();
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                ScrollRequested?.Invoke("SectionBigText");
+                return;
+            }
 
             string q = query.ToLowerInvariant();
             int targetIndex = -1;
@@ -141,9 +140,7 @@ namespace polestar.ViewModels
         {
             SelectedCarIndex = newIndex;
             SelectedCar = Cars[newIndex];
-            LogoRotationAngle += 360;
             UpdateIndexDisplay();
-
             CarTransitionRequested?.Invoke(newIndex);
         }
 
