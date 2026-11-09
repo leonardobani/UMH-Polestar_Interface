@@ -28,28 +28,28 @@ namespace polestar
                 Name = "Polestar 2",
                 Subtitle = "100% elettrica. Fastback ad alte prestazioni con dinamica di guida coinvolgente.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Design scandinavo puro, materiali innovativi riciclati e accelerazione istantanea.",
-                ImageSource = "images/2side.png"
+                ImageSource = "/images/2side.png"
             },
             new CarInfo
             {
                 Name = "Polestar 3",
                 Subtitle = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                ImageSource = "images/3side.png"
+                ImageSource = "/images/3side.png"
             },
             new CarInfo
             {
                 Name = "Polestar 4",
                 Subtitle = "Il SUV coupé elettrico trasformato. Comfort e aerodinamica senza lunotto posteriore.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lo spazio interno di una berlina di lusso si unisce alla linea affilata di un coupé sportivo.",
-                ImageSource = "images/4side.png"
+                ImageSource = "/images/4side.png"
             },
             new CarInfo
             {
                 Name = "Polestar 5",
                 Subtitle = "La GT elettrica a 4 porte ad altissime prestazioni. L'evoluzione di Polestar Precept.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Architettura a 800V, fino a 884 CV e telaio in alluminio incollato sviluppato per il motorsport.",
-                ImageSource = "images/5side.png"
+                ImageSource = "/images/5side.png"
             }
         };
 

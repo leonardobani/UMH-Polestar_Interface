@@ -98,7 +98,7 @@
                         BorderThickness="1,0,1,0" 
                         Width="85" 
                         HorizontalAlignment="Center">
-                    <Image Source="images/logo.png" 
+                    <Image Source="/images/logo.png" 
                            Width="34" Height="34" 
                            HorizontalAlignment="Center" 
                            VerticalAlignment="Center" 
@@ -184,7 +184,7 @@
                     <!-- Polestar 2 -->
                     <Border Grid.Row="0" Grid.Column="0" Background="Black" Margin="5">
                         <Grid Background="Transparent">
-                            <Image Source="images/2nature.png"/>
+                            <Image Source="/images/2nature.png"/>
                             <Rectangle x:Name="FiltroScuro1" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
                                 <TextBlock Text="Polestar 2" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
@@ -214,7 +214,7 @@
                     <!-- Polestar 3 -->
                     <Border Grid.Row="0" Grid.Column="1" Background="Black" Margin="5">
                         <Grid Background="Transparent">
-                            <Image Source="images/3nature.png"/>
+                            <Image Source="/images/3nature.png"/>
                             <Rectangle x:Name="FiltroScuro2" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
                                 <TextBlock Text="Polestar 3" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
@@ -244,7 +244,7 @@
                     <!-- Polestar 4 -->
                     <Border Grid.Row="1" Grid.Column="0" Background="Black" Margin="5">
                         <Grid Background="Transparent">
-                            <Image Source="images/4nature.png"/>
+                            <Image Source="/images/4nature.png"/>
                             <Rectangle x:Name="FiltroScuro3" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
                                 <TextBlock Text="Polestar 4" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
@@ -274,7 +274,7 @@
                     <!-- Polestar 5 -->
                     <Border Grid.Row="1" Grid.Column="1" Background="Black" Margin="5">
                         <Grid Background="Transparent">
-                            <Image Source="images/5nature.png"/>
+                            <Image Source="/images/5nature.png"/>
                             <Rectangle x:Name="FiltroScuro4" Fill="Black" Opacity="0" />
                             <StackPanel x:Name="ContenutoHover4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30" Opacity="0">
                                 <TextBlock Text="Polestar 5" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,15" />
@@ -302,7 +302,7 @@
                     </Border>
 
                     <!-- Logo Centrale -->
-                    <Image Source="images/logo.png" 
+                    <Image Source="/images/logo.png" 
                            Grid.RowSpan="2" 
                            Grid.ColumnSpan="2" 
                            HorizontalAlignment="Center" 
@@ -379,7 +379,7 @@
 
                     <!-- Immagine dell'auto (vista laterale, anima in dissolvenza/fade) -->
                     <Image x:Name="ShowcaseCarImage" 
-                           Source="images/3side.png" 
+                           Source="/images/3side.png" 
                            Width="620" 
                            Stretch="Uniform" 
                            HorizontalAlignment="Center" 
@@ -496,10 +496,10 @@
 
                     <!-- Contenitore immagini auto sovrapposte con animazione di dissolvenza -->
                     <Grid Height="300" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,40">
-                        <Image x:Name="MenuCar0" Source="images/2side.png" Width="680" Stretch="Uniform" Opacity="0" />
-                        <Image x:Name="MenuCar1" Source="images/3side.png" Width="680" Stretch="Uniform" Opacity="1" />
-                        <Image x:Name="MenuCar2" Source="images/4side.png" Width="680" Stretch="Uniform" Opacity="0" />
-                        <Image x:Name="MenuCar3" Source="images/5side.png" Width="680" Stretch="Uniform" Opacity="0" />
+                        <Image x:Name="MenuCar0" Source="/images/2side.png" Width="680" Stretch="Uniform" Opacity="0" />
+                        <Image x:Name="MenuCar1" Source="/images/3side.png" Width="680" Stretch="Uniform" Opacity="1" />
+                        <Image x:Name="MenuCar2" Source="/images/4side.png" Width="680" Stretch="Uniform" Opacity="0" />
+                        <Image x:Name="MenuCar3" Source="/images/5side.png" Width="680" Stretch="Uniform" Opacity="0" />
                     </Grid>
 
                 </Grid>
@@ -528,7 +528,7 @@
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Top">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Image Source="images/logo.png" 
+                            <Image Source="/images/logo.png" 
                                    Width="90" Height="90" 
                                    HorizontalAlignment="Center" 
                                    Margin="0,0,0,15" />
