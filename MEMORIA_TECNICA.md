@@ -191,7 +191,7 @@ Durante la fase de construcción se ejecutó un plan sistemático de pruebas fun
 En estricta observancia de las directrices académicas de la UMH relativas al uso ético y transparente de la inteligencia artificial generativa, se hace constar lo siguiente:
 
 1. **Herramientas empleadas:** Asistentes IA de soporte técnico (Gemini / Claude / ChatGPT) durante las fechas 08/11/2026 y 09/11/2026.
-2. **Propósito concreto:** Asistencia en la selección de bibliotecas de animación para WPF (`XamlFlair`), resolución del bug de duplicidad de eventos en el ciclo de vida de ventanas, y asesoramiento sobre buenas prácticas de desacoplamiento con `CommunityToolkit.Mvvm`.
+2. **Propósito concreto:** Asistencia en la evaluación de bibliotecas de animación (descartando `XamlFlair` por incompatibilidad con .NET 8 y desarrollando la clase de utilidad nativa `AnimationHelper`), resolución del bug de duplicidad de eventos en el ciclo de vida de ventanas, y asesoramiento sobre buenas prácticas de desacoplamiento con `CommunityToolkit.Mvvm`.
 3. **Control y aportación del estudiante:**
    * Todo el código sugerido fue examinado, validado técnicamente y adaptado manualmente a las directrices de la asignatura.
    * La lógica de validación obligatoria dictada en la práctica (`txtUsuario.Text`, `txtPassword.Password`, usuario `"Alumno"` y clave `"1234"`) fue mantenida íntegramente por el alumno.
